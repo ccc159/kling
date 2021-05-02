@@ -32,7 +32,7 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
   }
 
   return (
-    <View style={styles.centeredView}>
+    <View style={[Styles.circleStyle, styles.centeredView]}>
       <Modal animationType='fade' transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={Styles.boxStyle}>
@@ -41,11 +41,10 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
           </View>
         </View>
       </Modal>
-      <View style={Styles.circleStyle}>
-        <Pressable onPress={showModal}>
-          <Text style={styles.add}>Add Test</Text>
-        </Pressable>
-      </View>
+
+      <Pressable onPress={showModal}>
+        <Text style={styles.add}>Add Test</Text>
+      </Pressable>
     </View>
   );
 };
