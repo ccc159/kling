@@ -3,7 +3,8 @@ import { Dimensions, StyleSheet } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const circleSize = Math.min(windowWidth / 4, windowHeight / 4);
+const size = Math.min(windowWidth / 4, windowHeight / 4);
+export const CircleSize = size - (size % 2);
 
 export const Styles = StyleSheet.create({
   boxStyle: {
@@ -26,8 +27,8 @@ export const Styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
-    width: circleSize,
-    height: circleSize,
-    borderRadius: circleSize / 2,
+    width: CircleSize,
+    height: CircleSize,
+    borderRadius: CircleSize / 2,
   },
 });
