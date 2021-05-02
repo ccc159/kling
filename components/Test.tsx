@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { StyleSheet, Text, Pressable, View } from 'react-native';
+import { useInterval } from '../hooks/useInterval';
 import { ITask } from '../store/task';
 import { ITest } from '../types';
 import { Styles } from './styles';
@@ -10,6 +11,10 @@ interface ITestProps {
 }
 
 export const Test = ({ test, task }: ITestProps) => {
+  const [name, setName] = useState<number>(0);
+  // fetch mutations every 5 seconds, if the project is saving, then pause fetching
+  useInterval(() => setName(name + 1), 1000);
+
   function onPress() {
     console.log('pressed');
   }
@@ -17,7 +22,10 @@ export const Test = ({ test, task }: ITestProps) => {
   return (
     <View style={[Styles.circleStyle]}>
       <Pressable>
-        <Text style={styles.itemText}>{test.tester}</Text>
+        <Text style={styles.itemText}>
+          {test.tester}
+          {name}
+        </Text>
       </Pressable>
     </View>
   );
