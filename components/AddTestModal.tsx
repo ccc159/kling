@@ -41,10 +41,11 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
           </View>
         </View>
       </Modal>
-
-      <Pressable onPress={showModal}>
-        <Text style={styles.add}>Add Test</Text>
-      </Pressable>
+      <View style={Styles.circleStyle}>
+        <Pressable onPress={showModal}>
+          <Text style={styles.add}>Add Test</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };

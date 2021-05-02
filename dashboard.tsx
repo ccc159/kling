@@ -1,8 +1,10 @@
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect } from 'react';
 import { Pressable, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { AddTestModal } from './components/AddTestModal';
 import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy } from './components/helper';
 import { Styles } from './components/styles';
+import { Test } from './components/Test';
 import { AppContext } from './store';
 import { ITest } from './types';
 
@@ -12,25 +14,30 @@ export const Dashboard = function () {
   const { state, task } = AppContext();
   const tests = state.tests;
 
+  useEffect(() => {
+    // load local storage
+    loadLocalData();
+  }, []);
+
+  async function loadLocalData() {
+    try {
+      const jsonValue = await AsyncStorage.getItem('tests');
+      const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
+      task.LoadData(tests);
+    } catch (e) {
+      // error reading value
+    }
+  }
+
   const ListItem = ({ test }: { test: ITest }) => {
     if (IsTestAddPlaceHolder(test)) {
-      return (
-        <View style={Styles.circleStyle}>
-          <AddTestModal task={task} />
-        </View>
-      );
+      return <AddTestModal task={task} />;
     }
 
     if (IsTestDummy(test)) {
       return <View style={[Styles.circleStyle, styles.itemInvisible]} />;
     }
-    return (
-      <View style={[Styles.circleStyle]}>
-        <Pressable>
-          <Text style={styles.itemText}>{test.tester}</Text>
-        </Pressable>
-      </View>
-    );
+    return <Test {...{ test, task }} />;
   };
 
   const fillTestsTo3Times = (tests: ITest[]) => {
@@ -76,8 +83,5 @@ const styles = StyleSheet.create({
   },
   itemInvisible: {
     backgroundColor: 'transparent',
-  },
-  itemText: {
-    color: '#fff',
   },
 });

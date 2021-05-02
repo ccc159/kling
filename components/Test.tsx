@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { ITask } from '../store/task';
 import { ITest } from '../types';
+import { Styles } from './styles';
 
 interface ITestProps {
   test: ITest;
@@ -14,9 +15,9 @@ export const Test = ({ test, task }: ITestProps) => {
   }
 
   return (
-    <View style={styles.circleContainer}>
-      <Pressable onPress={onPress}>
-        <Text>{test.tester}</Text>
+    <View style={[Styles.circleStyle]}>
+      <Pressable>
+        <Text style={styles.itemText}>{test.tester}</Text>
       </Pressable>
     </View>
   );
@@ -30,5 +31,8 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 15,
     backgroundColor: 'red',
+  },
+  itemText: {
+    color: '#fff',
   },
 });
