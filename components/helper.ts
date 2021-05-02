@@ -33,3 +33,17 @@ export function CreateDummyTest(): ITest {
 export function IsTestDummy(test: ITest): boolean {
   return test.id === 'empty';
 }
+
+/**
+ * create a add test to form UI
+ */
+export function CreateAddTestPlaceHolder(): ITest {
+  return { id: 'add', tester: '', timestamp: {} };
+}
+
+/**
+ * Check if a test is a add test
+ */
+export function IsTestAddPlaceHolder(test: ITest): boolean {
+  return test.id === 'add';
+}

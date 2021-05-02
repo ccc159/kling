@@ -14,14 +14,19 @@ export const MyButton = ({ title, onPress }: IButton) => (
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 4,
+    backgroundColor: 'steelblue',
+    alignSelf: 'flex-start',
+    marginHorizontal: '1%',
+    marginBottom: 6,
+    minWidth: '48%',
+    textAlign: 'center',
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    backgroundColor: '#2196F3',
   },
 });

@@ -5,6 +5,7 @@ import { ITest } from '../types';
 import { MyButton } from './Button';
 import { GenerateID, Now } from './helper';
 import { MyTextInput } from './MyTextInput';
+import { Styles } from './styles';
 
 interface IAddTestModal {
   task: ITask;
@@ -24,6 +25,7 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
   }
 
   function addTest() {
+    if (tester === '') return;
     const newTest: ITest = { id: GenerateID(), tester, timestamp: { start: Now() } };
     task.AddTest(newTest);
     closeModal();
@@ -31,15 +33,18 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
 
   return (
     <View style={styles.centeredView}>
-      <Modal animationType='slide' transparent={true} visible={modalVisible}>
+      <Modal animationType='fade' transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+          <View style={Styles.boxStyle}>
             <MyTextInput value={tester} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
             <MyButton title={'OK'} onPress={addTest} />
           </View>
         </View>
       </Modal>
-      <MyButton title={'Add Test'} onPress={showModal} />
+
+      <Pressable onPress={showModal}>
+        <Text style={styles.add}>Add Test</Text>
+      </Pressable>
     </View>
   );
 };
@@ -49,26 +54,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  add: {
+    color: '#fff',
   },
 });

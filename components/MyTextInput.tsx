@@ -10,8 +10,14 @@ export const MyTextInput = ({ value, onChangeText }: ITextInput) => <TextInput s
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 4,
+    backgroundColor: 'oldlace',
+    alignSelf: 'flex-start',
+    marginHorizontal: '1%',
+    marginBottom: 6,
+    minWidth: '48%',
+    textAlign: 'center',
   },
 });

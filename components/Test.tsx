@@ -9,9 +9,15 @@ interface ITestProps {
 }
 
 export const Test = ({ test, task }: ITestProps) => {
+  function onPress() {
+    console.log('pressed');
+  }
+
   return (
     <View style={styles.circleContainer}>
-      <Text>{test.tester}</Text>
+      <Pressable onPress={onPress}>
+        <Text>{test.tester}</Text>
+      </Pressable>
     </View>
   );
 };
