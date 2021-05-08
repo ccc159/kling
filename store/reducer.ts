@@ -12,6 +12,11 @@ export const reducer: React.Reducer<IState, IAction> = (state: IState = initialS
     const jsonValue = JSON.stringify(newTests);
     AsyncStorage.setItem('tests', jsonValue);
     return { ...state, tests: newTests };
+  } else if (type === 'UPDATE_TEST') {
+    const newTests = state.tests.map((t) => (t.id === payload.id ? payload : t));
+    const jsonValue = JSON.stringify(newTests);
+    AsyncStorage.setItem('tests', jsonValue);
+    return { ...state, tests: newTests };
   }
 
   return state;

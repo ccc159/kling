@@ -49,6 +49,12 @@ export function IsTestAddPlaceHolder(test: ITest): boolean {
   return test.id === 'add';
 }
 
+/**
+ * helper function to get percentage of remaining time
+ * @param countDownMinutes
+ * @param from
+ * @returns
+ */
 export function CounterToShow(countDownMinutes: number, from: Date) {
   const dayFrom = dayjs(from);
   const dayCurrent = dayjs();
@@ -62,4 +68,13 @@ export function CounterToShow(countDownMinutes: number, from: Date) {
   const sign = `${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}`;
   const percentage = Math.floor((1 - remainingSeconds / totalSeconds) * 100);
   return { sign, percentage };
+}
+
+export function IsTimeUp(countDownMinutes: number, from: Date) {
+  const dayFrom = dayjs(from);
+  const dayCurrent = dayjs();
+  const diffSeconds = dayCurrent.diff(dayFrom, 'seconds');
+  const totalSeconds = countDownMinutes * 60;
+
+  return diffSeconds >= totalSeconds;
 }

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
-import { Pressable, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { AddTestModal } from './components/AddTestModal';
 import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy } from './components/helper';
 import { Styles } from './components/styles';
@@ -55,11 +55,13 @@ export const Dashboard = function () {
 
   return (
     <SafeAreaView style={styles.safearea}>
-      <View style={styles.container}>
-        {fillTestsTo3Times(tests).map((test, index) => (
-          <ListItem test={test} key={index} />
-        ))}
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          {fillTestsTo3Times(tests).map((test, index) => (
+            <ListItem test={test} key={index} />
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
