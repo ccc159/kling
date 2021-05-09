@@ -6,6 +6,7 @@ import { MyButton } from './Button';
 import { GenerateID, Now } from './helper';
 import { MyTextInput } from './MyTextInput';
 import { Styles } from './styles';
+import { MyTitle } from './Title';
 
 interface IAddTestModal {
   task: ITask;
@@ -36,8 +37,8 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
       <Modal animationType='fade' transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={Styles.boxStyle}>
-            <Text>Name of the test person:</Text>
-            <MyTextInput value={tester} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
+            <MyTitle text={'Name of the test person?'} />
+            <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
             <MyButton title={'OK'} onPress={addTest} />
           </View>
         </View>
