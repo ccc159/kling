@@ -5,6 +5,7 @@ import { ITask } from '../store/task';
 import { ITest, Result } from '../types';
 import { MyButton } from './Button';
 import { CounterToShow, IsTimeUp } from './helper';
+import { InProgressModal } from './InProgressModal';
 import { Styles } from './styles';
 import { Timer } from './Timer';
 
@@ -43,7 +44,8 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   const readyMinutes = 1;
   const expireMinutes = 3;
   const fromDate = new Date(test.timestamp.start!);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
+  const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
 
   const isReady = IsTimeUp(readyMinutes, fromDate);
   const isExpired = IsTimeUp(expireMinutes, fromDate);
@@ -55,12 +57,12 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   }, [isExpired]);
 
   function onPress() {
-    if (!isReady) return;
-    setShowModal(true);
+    if (!isReady) setShowProgressModal(true);
+    else setShowNextPhaseModal(true);
   }
 
   function closeModal() {
-    setShowModal(false);
+    setShowNextPhaseModal(false);
   }
 
   function startNextPhase() {
@@ -71,7 +73,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 
   return (
     <View style={Styles.circleStyle}>
-      <Modal animationType='fade' transparent={true} visible={showModal}>
+      <Modal animationType='fade' transparent={true} visible={showNextPhaseModal}>
         <View style={styles.centeredView}>
           <View style={Styles.boxStyle}>
             <Text>Are you ready for next phase?</Text>
@@ -80,6 +82,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
           </View>
         </View>
       </Modal>
+      <InProgressModal show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
         <Text style={styles.itemText}>{isReady ? 'ready' : test.tester}</Text>
@@ -123,7 +126,7 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
       <Modal animationType='fade' transparent={true} visible={showModal}>
         <View style={styles.centeredView}>
           <View style={Styles.boxStyle}>
-            <Text>Are you ready for next phase?</Text>
+            <Text>Give the result.</Text>
             <MyButton title={'No'} onPress={closeModal} />
             <MyButton title={'Ready'} onPress={startNextPhase} />
           </View>

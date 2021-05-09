@@ -36,6 +36,7 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
       <Modal animationType='fade' transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={Styles.boxStyle}>
+            <Text>Name of the test person:</Text>
             <MyTextInput value={tester} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
             <MyButton title={'OK'} onPress={addTest} />
           </View>
