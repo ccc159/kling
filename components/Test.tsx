@@ -82,7 +82,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
           </View>
         </View>
       </Modal>
-      <InProgressModal show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
+      <InProgressModal title={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
         <Text style={styles.itemText}>{isReady ? 'ready' : test.tester}</Text>

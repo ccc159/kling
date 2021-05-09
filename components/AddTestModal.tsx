@@ -4,6 +4,7 @@ import { ITask } from '../store/task';
 import { ITest } from '../types';
 import { MyButton } from './Button';
 import { GenerateID, Now } from './helper';
+import { MyModal } from './MyModal';
 import { MyTextInput } from './MyTextInput';
 import { Styles } from './styles';
 import { MyTitle } from './Title';
@@ -34,15 +35,11 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
 
   return (
     <View style={[Styles.circleStyle, styles.centeredView]}>
-      <Modal animationType='fade' transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={Styles.boxStyle}>
-            <MyTitle text={'Name of the test person?'} />
-            <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
-            <MyButton title={'OK'} onPress={addTest} />
-          </View>
-        </View>
-      </Modal>
+      <MyModal visible={modalVisible} setVisible={setModalVisible}>
+        <MyTitle text={'Name of the test person?'} />
+        <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
+        <MyButton title={'OK'} onPress={addTest} />
+      </MyModal>
 
       <Pressable onPress={showModal}>
         <Text style={styles.add}>Add Test</Text>
