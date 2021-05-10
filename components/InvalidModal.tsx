@@ -20,7 +20,7 @@ export const InvalidModal = ({ show, setShow, title, description, children }: II
   return (
     <MyModal visible={show} setVisible={setShow}>
       {title && <MyTitle text={title} />}
-      <View style={{ minHeight: 100, justifyContent: 'center' }}>
+      <View style={{ minHeight: 100, justifyContent: 'center', marginBottom: 10 }}>
         <Text style={{ marginBottom: 5 }}>{description}</Text>
         {children}
       </View>

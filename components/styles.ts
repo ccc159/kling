@@ -29,7 +29,7 @@ export const Styles = StyleSheet.create({
     width: '80%',
   },
   circleStyle: {
-    backgroundColor: 'skyblue',
+    // backgroundColor: 'skyblue',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,

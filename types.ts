@@ -6,8 +6,7 @@ export enum Result {
 
 export interface ITimestamp {
   start?: Date;
-  phase1?: Date;
-  phase2?: Date;
+  intermediate?: Date;
   end?: Date;
 }
 

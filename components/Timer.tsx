@@ -31,7 +31,7 @@ export const Timer = ({ color, countDownMinutes, from, onPress }: ITimer) => {
             cx={CircleSize / 2}
             cy={CircleSize / 2}
             r={radius}
-            stroke='#4d7bf3'
+            stroke='#fff'
             strokeWidth='8'
           />
         </Svg>
