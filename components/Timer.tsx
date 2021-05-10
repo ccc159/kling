@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { CounterToShow } from './helper';
 import { CircleSize } from './styles';
@@ -9,16 +9,17 @@ interface ITimer {
   color?: string;
   countDownMinutes: number;
   from: Date;
+  onPress?: () => void;
 }
 
 const radius = CircleSize / 2 - 4;
 const perimeter = Math.PI * radius * 2;
 
-export const Timer = ({ color, countDownMinutes, from }: ITimer) => {
+export const Timer = ({ color, countDownMinutes, from, onPress }: ITimer) => {
   const { sign, percentage } = CounterToShow(countDownMinutes, from);
 
   return (
-    <View style={styles.timerContainer}>
+    <Pressable onPress={onPress} style={styles.timerContainer}>
       <View style={styles.digitsContainer}>
         <Text style={styles.digits}>{sign}</Text>
       </View>
@@ -35,7 +36,7 @@ export const Timer = ({ color, countDownMinutes, from }: ITimer) => {
           />
         </Svg>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -56,9 +57,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 63,
   },
   digits: {
     color: '#fff',
+    fontSize: 11,
   },
 });

@@ -10,7 +10,14 @@ import { InvalidModal } from './InvalidModal';
 import { CircleSize, Styles } from './styles';
 import { Timer } from './Timer';
 import Phase1WaitSvg from '../assets/svg/phase1_wait.svg';
+import Phase1ReadySvg from '../assets/svg/phase1_ready.svg';
+import Phase2StartSvg from '../assets/svg/phase2_start.svg';
 import ResultInvalidSvg from '../assets/svg/result_invalid.svg';
+import dayjs from 'dayjs';
+import { MyModal } from './MyModal';
+import { MyTitle } from './Title';
+import { SvgWrapper } from './SvgWrapper';
+import { MyKeyedText, MyText } from './MyText';
 
 interface ITestProps {
   test: ITest;
@@ -37,14 +44,14 @@ export const Test = ({ test, task }: ITestProps) => {
     <View style={Styles.circleStyle}>
       {/* <Timer color='black' from={test.timestamp.start!} current={new Date()} /> */}
       <Pressable>
-        <Text style={styles.itemText}>{test.tester}</Text>
+        <Text>{test.tester}</Text>
       </Pressable>
     </View>
   );
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 3;
+  const readyMinutes = 15;
   const expireMinutes = 20;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
@@ -76,29 +83,24 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 
   return (
     <View style={Styles.circleStyle}>
-      <Modal animationType='fade' transparent={true} visible={showNextPhaseModal}>
-        <View style={styles.centeredView}>
-          <View style={Styles.boxStyle}>
-            <Text>Are you ready for next phase?</Text>
-            <MyButton title={'No'} onPress={closeModal} />
-            <MyButton title={'Ready'} onPress={startNextPhase} />
-          </View>
-        </View>
-      </Modal>
-      <InvalidModal title={test.tester} description={'This test is already expired.'} show={showProgressModal} setShow={setShowProgressModal} />
-      <InProgressModal title={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
-      {!isReady && <Timer color='black' countDownMinutes={readyMinutes} from={fromDate} />}
+      <MyModal visible={showNextPhaseModal} setVisible={setShowNextPhaseModal}>
+        <MyTitle text={'Readt to make drops'} />
+        <MyText>Have 4 drops in the test case.</MyText>
+        <SvgWrapper Svg={Phase2StartSvg} />
+        <MyButton title={'Done'} onPress={startNextPhase} />
+      </MyModal>
+      <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        <Phase1WaitSvg width={CircleSize - 14} height={CircleSize - 14} />
-        {/* <Text style={styles.itemText}>{isReady ? 'phase1 ready' : test.tester}</Text> */}
+        {isReady ? <Phase1ReadySvg width={CircleSize} height={CircleSize} /> : <Phase1WaitSvg width={CircleSize - 14} height={CircleSize - 14} />}
       </Pressable>
     </View>
   );
 };
 
 const TestPhase2 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 1.5;
-  const expireMinutes = 3;
+  const readyMinutes = 15;
+  const expireMinutes = 30;
   const fromDate = new Date(test.timestamp.phase1!);
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -131,7 +133,7 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
       <Modal animationType='fade' transparent={true} visible={showModal}>
         <View style={styles.centeredView}>
           <View style={Styles.boxStyle}>
-            <Text>Give the result.</Text>
+            <MyText>Give the result.</MyText>
             <MyButton title={'No'} onPress={closeModal} />
             <MyButton title={'Ready'} onPress={startNextPhase} />
           </View>
@@ -139,24 +141,43 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
       </Modal>
       {!isReady && <Timer color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        <Text style={styles.itemText}>{isReady ? 'ready' : test.tester}</Text>
+        {isReady ? <Phase1ReadySvg width={CircleSize} height={CircleSize} /> : <Phase1WaitSvg width={CircleSize - 14} height={CircleSize - 14} />}
       </Pressable>
     </View>
   );
 };
 
 const TestResult = ({ test, task }: ITestProps) => {
+  const [showInvalidModal, setShowInvalidModal] = useState<boolean>(false);
+  const [showExpiredModal, setShowExpiredModal] = useState<boolean>(false);
+
   function onPress() {
     console.log('pressed');
+    if (test.result === Result.Invalid) {
+      if (!test.timestamp.phase1 || !test.timestamp.phase2 || !test.timestamp.end) setShowExpiredModal(true);
+      else setShowInvalidModal(true);
+      return;
+    }
   }
 
   return (
-    <View style={Styles.circleStyle}>
-      <Pressable>
-        {test.result === Result.Positive && <Text style={styles.itemText}>positive</Text>}
-        {test.result === Result.Negative && <Text style={styles.itemText}>negative</Text>}
-        {test.result === Result.Invalid && <ResultInvalidSvg width={CircleSize} height={CircleSize} />}
-      </Pressable>
+    <View>
+      <InvalidModal
+        show={showExpiredModal}
+        setShow={setShowExpiredModal}
+        title={'Expired Test'}
+        description={"This test is not valid because it's expired."}
+      >
+        <MyKeyedText textkey={'Name'} value={test.tester} />
+        <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
+      </InvalidModal>
+      <View style={Styles.circleStyle}>
+        <Pressable onPress={onPress}>
+          {test.result === Result.Positive && <Text>positive</Text>}
+          {test.result === Result.Negative && <Text>negative</Text>}
+          {test.result === Result.Invalid && <ResultInvalidSvg width={CircleSize} height={CircleSize} />}
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -174,8 +195,5 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 15,
     backgroundColor: 'red',
-  },
-  itemText: {
-    color: '#fff',
   },
 });
