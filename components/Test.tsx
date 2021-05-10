@@ -6,7 +6,7 @@ import { ITest, Result } from '../types';
 import { MyButton } from './Button';
 import { CounterToShow, IsTimeUp } from './helper';
 import { InProgressModal } from './InProgressModal';
-import { InvalidModal } from './InvalidModal';
+import { TitledModal } from './TitledModal';
 import { CircleSize, Styles } from './styles';
 import { Timer } from './Timer';
 import Phase1WaitSvg from '../assets/svg/phase1_wait.svg';
@@ -91,19 +91,6 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   );
 };
 
-const radioButtonsData: RadioButtonProps[] = [
-  {
-    id: '1', // acts as primary key, should be unique and non-empty string
-    label: 'Positive',
-    value: 'Positive',
-  },
-  {
-    id: '2',
-    label: 'Option 2',
-    value: 'option2',
-  },
-];
-
 const TestPhase2 = ({ test, task }: ITestProps) => {
   const readyMinutes = 0.2;
   const expireMinutes = 30;
@@ -170,19 +157,20 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
 const TestResult = ({ test, task }: ITestProps) => {
   const [showInvalidModal, setShowInvalidModal] = useState<boolean>(false);
   const [showExpiredModal, setShowExpiredModal] = useState<boolean>(false);
+  const [showResultModal, setShowResultModal] = useState<boolean>(false);
 
   function onPress() {
-    console.log('pressed');
     if (test.result === Result.Invalid) {
       if (!test.timestamp.intermediate || !test.timestamp.end) setShowExpiredModal(true);
       else setShowInvalidModal(true);
       return;
     }
+    setShowResultModal(true);
   }
 
   return (
     <View>
-      <InvalidModal
+      <TitledModal
         show={showExpiredModal}
         setShow={setShowExpiredModal}
         title={'Expired Test'}
@@ -190,8 +178,8 @@ const TestResult = ({ test, task }: ITestProps) => {
       >
         <MyKeyedText textkey={'Name'} value={test.tester} />
         <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
-      </InvalidModal>
-      <InvalidModal
+      </TitledModal>
+      <TitledModal
         show={showInvalidModal}
         setShow={setShowInvalidModal}
         title={'Invalid Test'}
@@ -200,7 +188,15 @@ const TestResult = ({ test, task }: ITestProps) => {
         <MyKeyedText textkey={'Name'} value={test.tester} />
         <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
         <MyKeyedText textkey={'Ended'} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
-      </InvalidModal>
+      </TitledModal>
+      <TitledModal show={showResultModal} setShow={setShowResultModal} title={'Result'}>
+        {test.result === Result.Positive && <ResultPositiveSvg width={50} height={50} />}
+        {test.result === Result.Negative && <ResultNegativeSvg width={50} height={50} />}
+        <MyKeyedText textkey={'Name'} value={test.tester} />
+        <MyKeyedText textkey={'Result'} value={test.result!} />
+        <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
+        <MyKeyedText textkey={'Ended'} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
+      </TitledModal>
       <View style={Styles.circleStyle}>
         <Pressable onPress={onPress}>
           {test.result === Result.Positive && <ResultPositiveSvg width={CircleSize} height={CircleSize} />}
@@ -211,19 +207,3 @@ const TestResult = ({ test, task }: ITestProps) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  circleContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: 'red',
-  },
-});
