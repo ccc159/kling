@@ -8,6 +8,8 @@ import { MyModal } from './MyModal';
 import { MyTextInput } from './MyTextInput';
 import { Styles } from './styles';
 import { MyTitle } from './Title';
+import ProbeInNoseSvg from '../assets/svg/probe_in_nose.svg';
+import { SvgWrapper } from './SvgWrapper';
 
 interface IAddTestModal {
   task: ITask;
@@ -34,15 +36,16 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
   }
 
   return (
-    <View style={[Styles.circleStyle, styles.centeredView]}>
+    <View style={[Styles.circleStyle]}>
       <MyModal visible={modalVisible} setVisible={setModalVisible}>
         <MyTitle text={'Name of the test person?'} />
+        <SvgWrapper Svg={ProbeInNoseSvg} />
         <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
         <MyButton title={'OK'} onPress={addTest} />
       </MyModal>
 
       <Pressable onPress={showModal}>
-        <Text style={styles.add}>Add Test</Text>
+        <Text style={styles.add}>Add test</Text>
       </Pressable>
     </View>
   );

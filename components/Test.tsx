@@ -6,6 +6,7 @@ import { ITest, Result } from '../types';
 import { MyButton } from './Button';
 import { CounterToShow, IsTimeUp } from './helper';
 import { InProgressModal } from './InProgressModal';
+import { InvalidModal } from './InvalidModal';
 import { Styles } from './styles';
 import { Timer } from './Timer';
 
@@ -46,6 +47,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
+  const [showInvalidModal, setShowInvalidModal] = useState<boolean>(false);
 
   const isReady = IsTimeUp(readyMinutes, fromDate);
   const isExpired = IsTimeUp(expireMinutes, fromDate);
@@ -57,6 +59,10 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   }, [isExpired]);
 
   function onPress() {
+    if (isExpired) {
+      setShowInvalidModal(true);
+      return;
+    }
     if (!isReady) setShowProgressModal(true);
     else setShowNextPhaseModal(true);
   }
@@ -82,10 +88,11 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
           </View>
         </View>
       </Modal>
+      <InvalidModal title={test.tester} description={'This test is already expired.'} show={showProgressModal} setShow={setShowProgressModal} />
       <InProgressModal title={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        <Text style={styles.itemText}>{isReady ? 'ready' : test.tester}</Text>
+        <Text style={styles.itemText}>{isReady ? 'phase1 ready' : test.tester}</Text>
       </Pressable>
     </View>
   );

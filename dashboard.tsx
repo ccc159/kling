@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: '#202B37',
   },
   container: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'grey',
     margin: 20,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
