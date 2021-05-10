@@ -80,8 +80,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     margin: 20,
     alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexGrow: 1,
   },
   itemInvisible: {
     backgroundColor: 'transparent',

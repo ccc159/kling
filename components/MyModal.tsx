@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Modal, View, Pressable } from 'react-native';
+import { StyleSheet, Modal, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 type IModal = {
@@ -15,16 +15,18 @@ export const MyModal = ({ visible, children, setVisible }: IModal) => {
 
   return (
     <Modal animationType='fade' transparent={true} visible={visible}>
-      <View style={styles.centeredView}>
-        <View style={styles.boxStyle}>
-          {setVisible && (
-            <Pressable style={styles.closeButton} onPress={onPress}>
-              <AntDesign name='closecircleo' size={24} color='#33aad4' />
-            </Pressable>
-          )}
-          {children}
+      <KeyboardAvoidingView style={{ height: '100%' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.centeredView}>
+          <View style={styles.boxStyle}>
+            {setVisible && (
+              <Pressable style={styles.closeButton} onPress={onPress}>
+                <AntDesign name='closecircleo' size={24} color='#33aad4' />
+              </Pressable>
+            )}
+            {children}
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
+    backgroundColor: '#bfbfbf5e',
     justifyContent: 'center',
     alignItems: 'center',
   },

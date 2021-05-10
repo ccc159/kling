@@ -31,8 +31,8 @@ export const Timer = ({ color, countDownMinutes, from, onPress }: ITimer) => {
             cx={CircleSize / 2}
             cy={CircleSize / 2}
             r={radius}
-            stroke='#fff'
-            strokeWidth='8'
+            stroke='#ffffffc7'
+            strokeWidth='3'
           />
         </Svg>
       </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 63,
+    paddingTop: 62,
   },
   digits: {
     color: '#fff',

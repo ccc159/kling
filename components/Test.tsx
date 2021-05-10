@@ -7,7 +7,7 @@ import { MyButton } from './Button';
 import { CounterToShow, IsTimeUp } from './helper';
 import { InProgressModal } from './InProgressModal';
 import { TitledModal } from './TitledModal';
-import { CircleSize, Styles } from './styles';
+import { CircleSize, SmallCircleSize, Styles } from './styles';
 import { Timer } from './Timer';
 import Phase1WaitSvg from '../assets/svg/phase1_wait.svg';
 import Phase1ReadySvg from '../assets/svg/phase1_ready.svg';
@@ -44,7 +44,7 @@ export const Test = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 0.1;
+  const readyMinutes = 1;
   const expireMinutes = 20;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
@@ -85,14 +85,14 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
       <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        {isReady ? <Phase1ReadySvg width={CircleSize} height={CircleSize} /> : <Phase1WaitSvg width={CircleSize - 14} height={CircleSize - 14} />}
+        {isReady ? <Phase1ReadySvg width={CircleSize} height={CircleSize} /> : <Phase1WaitSvg width={SmallCircleSize} height={SmallCircleSize} />}
       </Pressable>
     </View>
   );
 };
 
 const TestPhase2 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 0.2;
+  const readyMinutes = 10;
   const expireMinutes = 30;
   const fromDate = new Date(test.timestamp.intermediate!);
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
@@ -148,7 +148,7 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
       <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        {isReady ? <Phase2WaitSvg width={CircleSize} height={CircleSize} /> : <Phase2WaitSvg width={CircleSize - 14} height={CircleSize - 14} />}
+        {isReady ? <Phase2WaitSvg width={CircleSize} height={CircleSize} /> : <Phase2WaitSvg width={SmallCircleSize} height={SmallCircleSize} />}
       </Pressable>
     </View>
   );
