@@ -7,8 +7,10 @@ import { MyButton } from './Button';
 import { CounterToShow, IsTimeUp } from './helper';
 import { InProgressModal } from './InProgressModal';
 import { InvalidModal } from './InvalidModal';
-import { Styles } from './styles';
+import { CircleSize, Styles } from './styles';
 import { Timer } from './Timer';
+import Phase1WaitSvg from '../assets/svg/phase1_wait.svg';
+import ResultInvalidSvg from '../assets/svg/result_invalid.svg';
 
 interface ITestProps {
   test: ITest;
@@ -42,12 +44,11 @@ export const Test = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 1;
-  const expireMinutes = 3;
+  const readyMinutes = 3;
+  const expireMinutes = 20;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
-  const [showInvalidModal, setShowInvalidModal] = useState<boolean>(false);
 
   const isReady = IsTimeUp(readyMinutes, fromDate);
   const isExpired = IsTimeUp(expireMinutes, fromDate);
@@ -59,10 +60,6 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   }, [isExpired]);
 
   function onPress() {
-    if (isExpired) {
-      setShowInvalidModal(true);
-      return;
-    }
     if (!isReady) setShowProgressModal(true);
     else setShowNextPhaseModal(true);
   }
@@ -92,7 +89,8 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
       <InProgressModal title={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        <Text style={styles.itemText}>{isReady ? 'phase1 ready' : test.tester}</Text>
+        <Phase1WaitSvg width={CircleSize - 14} height={CircleSize - 14} />
+        {/* <Text style={styles.itemText}>{isReady ? 'phase1 ready' : test.tester}</Text> */}
       </Pressable>
     </View>
   );
@@ -157,7 +155,7 @@ const TestResult = ({ test, task }: ITestProps) => {
       <Pressable>
         {test.result === Result.Positive && <Text style={styles.itemText}>positive</Text>}
         {test.result === Result.Negative && <Text style={styles.itemText}>negative</Text>}
-        {test.result === Result.Invalid && <Text style={styles.itemText}>invalid</Text>}
+        {test.result === Result.Invalid && <ResultInvalidSvg width={CircleSize} height={CircleSize} />}
       </Pressable>
     </View>
   );

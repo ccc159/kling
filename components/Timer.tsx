@@ -31,7 +31,7 @@ export const Timer = ({ color, countDownMinutes, from }: ITimer) => {
             cy={CircleSize / 2}
             r={radius}
             stroke='#4d7bf3'
-            strokeWidth='10'
+            strokeWidth='8'
           />
         </Svg>
       </View>
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
+    zIndex: 5,
   },
   svgContainer: {
     transform: [{ rotateX: '-180deg' }, { rotateZ: '90deg' }],

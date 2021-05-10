@@ -6,9 +6,10 @@ import { MyButton } from './Button';
 import { GenerateID, Now } from './helper';
 import { MyModal } from './MyModal';
 import { MyTextInput } from './MyTextInput';
-import { Styles } from './styles';
+import { CircleSize, Styles } from './styles';
 import { MyTitle } from './Title';
-import ProbeInNoseSvg from '../assets/svg/probe_in_nose.svg';
+import Phase1Start from '../assets/svg/phase1_start.svg';
+import NewTest from '../assets/svg/new_test.svg';
 import { SvgWrapper } from './SvgWrapper';
 
 interface IAddTestModal {
@@ -39,29 +40,14 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
     <View style={[Styles.circleStyle]}>
       <MyModal visible={modalVisible} setVisible={setModalVisible}>
         <MyTitle text={'Name of the test person?'} />
-        <SvgWrapper Svg={ProbeInNoseSvg} />
+        <SvgWrapper Svg={Phase1Start} />
         <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
         <MyButton title={'OK'} onPress={addTest} />
       </MyModal>
 
       <Pressable onPress={showModal}>
-        <Text style={styles.add}>Add test</Text>
+        <NewTest width={CircleSize} height={CircleSize} />
       </Pressable>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  add: {
-    color: '#fff',
-  },
-});
