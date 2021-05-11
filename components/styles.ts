@@ -5,7 +5,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const size = Math.min(windowWidth / 4, windowHeight / 4);
 export const CircleSize = size - (size % 2) - 2;
-export const SmallCircleSize = CircleSize - 8;
+export const SmallCircleSize = CircleSize - 4;
 
 export const Colors = {
   buttonNormal: '#33aad4',
@@ -30,6 +30,7 @@ export const Styles = StyleSheet.create({
     width: '80%',
   },
   circleStyle: {
+    // backgroundColor: 'purple',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,

@@ -12,7 +12,8 @@ interface ITimer {
   onPress?: () => void;
 }
 
-const radius = CircleSize / 2 - 4;
+const strokeWidth = 4;
+const radius = CircleSize / 2 - 4 + strokeWidth / 2;
 const perimeter = Math.PI * radius * 2;
 
 export const Timer = ({ color, countDownMinutes, from, onPress }: ITimer) => {
@@ -32,7 +33,7 @@ export const Timer = ({ color, countDownMinutes, from, onPress }: ITimer) => {
             cy={CircleSize / 2}
             r={radius}
             stroke='#ffffffc7'
-            strokeWidth='3'
+            strokeWidth={strokeWidth}
           />
         </Svg>
       </View>
