@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, Pressable, View, Modal } from 'react-native';
+import { Pressable, View, Vibration } from 'react-native';
 import { useInterval } from '../hooks/useInterval';
 import { ITask } from '../store/task';
 import { ITest, Result } from '../types';
 import { MyButton } from './Button';
-import { CounterToShow, IsTimeUp } from './helper';
+import { IsTimeUp } from './helper';
 import { InProgressModal } from './InProgressModal';
 import { TitledModal } from './TitledModal';
 import { CircleSize, SmallCircleSize, Styles } from './styles';
@@ -13,7 +13,6 @@ import Phase1WaitSvg from '../assets/svg/phase1_wait.svg';
 import Phase1ReadySvg from '../assets/svg/phase1_ready.svg';
 import Phase2StartSvg from '../assets/svg/phase2_start.svg';
 import Phase2WaitSvg from '../assets/svg/phase2_wait.svg';
-// import Phase2ReadySvg from '../assets/svg/phase2_ready.svg';
 import ResultInvalidSvg from '../assets/svg/result_invalid.svg';
 import ResultFillSvg from '../assets/svg/result_fill.svg';
 import ResultPositiveSvg from '../assets/svg/result_positive.svg';
@@ -23,7 +22,7 @@ import { MyModal } from './MyModal';
 import { MyTitle } from './Title';
 import { SvgWrapper } from './SvgWrapper';
 import { MyKeyedText, MyText } from './MyText';
-import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import RadioGroup from 'react-native-radio-buttons-group';
 
 interface ITestProps {
   test: ITest;
@@ -44,7 +43,7 @@ export const Test = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 1;
+  const readyMinutes = 0.5;
   const expireMinutes = 20;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
@@ -54,7 +53,12 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   const isExpired = IsTimeUp(expireMinutes, fromDate);
 
   useEffect(() => {
+    if (isReady) Vibration.vibrate();
+  }, [isReady]);
+
+  useEffect(() => {
     if (!isExpired) return;
+    Vibration.vibrate();
     const updateTest: ITest = { ...test, result: Result.Invalid };
     task.UpdateTest(updateTest);
   }, [isExpired]);
@@ -92,7 +96,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase2 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 10;
+  const readyMinutes = 1;
   const expireMinutes = 30;
   const fromDate = new Date(test.timestamp.intermediate!);
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
@@ -103,7 +107,12 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
   const isExpired = IsTimeUp(expireMinutes, fromDate);
 
   useEffect(() => {
+    if (isReady) Vibration.vibrate();
+  }, [isReady]);
+
+  useEffect(() => {
     if (!isExpired) return;
+    Vibration.vibrate();
     const updateTest: ITest = { ...test, result: Result.Invalid };
     task.UpdateTest(updateTest);
   }, [isExpired]);
