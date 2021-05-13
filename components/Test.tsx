@@ -23,6 +23,7 @@ import { MyTitle } from './Title';
 import { SvgWrapper } from './SvgWrapper';
 import { MyKeyedText, MyText } from './MyText';
 import RadioGroup from 'react-native-radio-buttons-group';
+import { PlayNotification } from './Sounds';
 
 interface ITestProps {
   test: ITest;
@@ -43,7 +44,7 @@ export const Test = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 0.5;
+  const readyMinutes = 0.1;
   const expireMinutes = 20;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
@@ -53,8 +54,16 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   const isExpired = IsTimeUp(expireMinutes, fromDate);
 
   useEffect(() => {
-    if (isReady) Vibration.vibrate();
+    if (isReady) {
+      notificate();
+    }
   }, [isReady]);
+
+  async function notificate() {
+    console.log('test1');
+    Vibration.vibrate();
+    await PlayNotification();
+  }
 
   useEffect(() => {
     if (!isExpired) return;
@@ -96,7 +105,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase2 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 1;
+  const readyMinutes = 0.1;
   const expireMinutes = 30;
   const fromDate = new Date(test.timestamp.intermediate!);
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
@@ -107,8 +116,16 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
   const isExpired = IsTimeUp(expireMinutes, fromDate);
 
   useEffect(() => {
-    if (isReady) Vibration.vibrate();
+    if (isReady) {
+      notificate();
+    }
   }, [isReady]);
+
+  async function notificate() {
+    console.log('test2');
+    Vibration.vibrate();
+    await PlayNotification();
+  }
 
   useEffect(() => {
     if (!isExpired) return;
