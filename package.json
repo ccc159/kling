@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.4",
+    "@types/react-native-snap-carousel": "^3.8.3",
     "dayjs": "^1.10.4",
     "expo": "~41.0.1",
     "expo-av": "~9.1.2",
@@ -20,6 +21,7 @@
     "react-native-chart-kit": "^6.11.0",
     "react-native-pager-view": "5.0.12",
     "react-native-radio-buttons-group": "^2.2.4",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.1",
     "react-native-web": "~0.16.2"
   },

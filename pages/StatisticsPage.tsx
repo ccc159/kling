@@ -1,26 +1,23 @@
-import React from 'react';
-import { Dimensions, ScrollView, StatusBar, StyleSheet, View, Text } from 'react-native';
-import { AddTestModal } from '../components/AddTestModal';
-import {
-  CreateAddTestPlaceHolder,
-  CreateDummyTest,
-  GetTestCountByDays,
-  GetTestCountByMonth,
-  IsTestAddPlaceHolder,
-  IsTestDummy,
-} from '../components/helper';
-import { Styles } from '../components/styles';
-import { Test } from '../components/Test';
+import React, { useCallback, useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+
+import { GetTestCountByDays, GetTestCountByMonth } from '../components/helper';
 import { IState, ITest } from '../types';
 import { ITask } from '../store/task';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from 'react-native-chart-kit';
 import { windowWidth } from '../components/styles';
 import { PageTitle } from '../components/Title';
 import dayjs, { Dayjs } from 'dayjs';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 interface IStatisticsPageProps {
   state: IState;
   task: ITask;
+}
+
+interface RenderItemProps {
+  item: string;
+  index: number;
 }
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Otc', 'Nov', 'Dec'];
@@ -28,13 +25,45 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
   const tests = state.tests;
 
+  const carouselItems = ['year', '7day'];
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  const renderItem = useCallback(({ item, index }: RenderItemProps) => {
+    if (item === 'year') return <TestsPerYear {...{ tests }} />;
+    else return <TestsPer7Days {...{ tests }} />;
+  }, []);
+
+  const ref = useRef(null);
+
   return (
     <View key='statistics'>
       <ScrollView>
         <View style={styles.container}>
           <PageTitle text='Statistics'></PageTitle>
-          <TestsPerYear tests={tests} />
-          <TestsPer7Days tests={tests} />
+          <Carousel
+            layout={'default'}
+            ref={ref}
+            data={carouselItems}
+            sliderWidth={windowWidth - 40}
+            itemWidth={windowWidth - 40}
+            renderItem={renderItem}
+            onSnapToItem={(index: number) => setActiveIndex(index)}
+          />
+          <Pagination
+            tappableDots
+            carouselRef={ref as any}
+            dotsLength={carouselItems.length}
+            activeDotIndex={activeIndex}
+            containerStyle={{ position: 'relative', top: -20 }}
+            dotStyle={{
+              width: 8,
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            }}
+            inactiveDotOpacity={0.4}
+            inactiveDotScale={0.6}
+          />
         </View>
       </ScrollView>
     </View>
@@ -49,7 +78,6 @@ const TestsPer7Days = function ({ tests }: { tests: ITest[] }) {
   const last7Days = getLast7Days();
   const testCounts = GetTestCountByDays(tests, last7Days);
   const last7DaysLabels = last7Days.map((d) => d.format('DD.MM'));
-  console.log(testCounts);
 
   function getLast7Days() {
     const days: Dayjs[] = [];
