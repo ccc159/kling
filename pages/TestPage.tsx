@@ -54,13 +54,6 @@ export const TestPage = function ({ state, task }: ITestPageProps) {
 };
 
 const styles = StyleSheet.create({
-  safearea: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    backgroundColor: '#202B37',
-  },
   container: {
     flex: 1,
     flexDirection: 'row',
