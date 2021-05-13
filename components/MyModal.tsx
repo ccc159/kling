@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Modal, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 
 type IModal = {
   visible?: boolean;
@@ -15,18 +16,20 @@ export const MyModal = ({ visible, children, setVisible }: IModal) => {
 
   return (
     <Modal animationType='fade' transparent={true} visible={visible}>
-      <KeyboardAvoidingView style={{ height: '100%' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.centeredView}>
-          <View style={styles.boxStyle}>
-            {setVisible && (
-              <Pressable style={styles.closeButton} onPress={onPress}>
-                <AntDesign name='closecircleo' size={24} color='#33aad4' />
-              </Pressable>
-            )}
-            {children}
+      <BlurView intensity={85} tint={'dark'} style={[StyleSheet.absoluteFill]}>
+        <KeyboardAvoidingView style={{ height: '100%' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={styles.centeredView}>
+            <View style={styles.boxStyle}>
+              {setVisible && (
+                <Pressable style={styles.closeButton} onPress={onPress}>
+                  <AntDesign name='closecircleo' size={24} color='#33aad4' />
+                </Pressable>
+              )}
+              {children}
+            </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </BlurView>
     </Modal>
   );
 };
