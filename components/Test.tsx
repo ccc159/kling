@@ -54,13 +54,14 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   const isExpired = IsTimeUp(expireMinutes, fromDate);
 
   useEffect(() => {
-    if (isReady) {
-      notificate();
+    if (isReady && !test.firstCharm) {
+      markReady();
     }
   }, [isReady]);
 
-  async function notificate() {
-    console.log('test1');
+  async function markReady() {
+    const newTest: ITest = { ...test, firstCharm: true };
+    task.UpdateTest(newTest);
     Vibration.vibrate();
     await PlayNotification();
   }
@@ -116,13 +117,14 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
   const isExpired = IsTimeUp(expireMinutes, fromDate);
 
   useEffect(() => {
-    if (isReady) {
-      notificate();
+    if (isReady && !test.secondCharm) {
+      markReady();
     }
   }, [isReady]);
 
-  async function notificate() {
-    console.log('test2');
+  async function markReady() {
+    const newTest: ITest = { ...test, secondCharm: true };
+    task.UpdateTest(newTest);
     Vibration.vibrate();
     await PlayNotification();
   }

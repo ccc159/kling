@@ -1,5 +1,3 @@
-import { Audio } from 'expo-av';
-
 export enum Result {
   Negative = 'Negative',
   Positive = 'Positive',
@@ -29,6 +27,8 @@ export interface ITest {
   timestamp: ITimestamp;
   result?: Result;
   report?: IReport;
+  firstCharm: boolean;
+  secondCharm: boolean;
 }
 
 export interface IState {

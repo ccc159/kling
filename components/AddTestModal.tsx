@@ -31,7 +31,7 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
 
   function addTest() {
     if (tester === '') return;
-    const newTest: ITest = { id: GenerateID(), tester, timestamp: { start: Now() } };
+    const newTest: ITest = { id: GenerateID(), tester, timestamp: { start: Now() }, firstCharm: false, secondCharm: false };
     task.AddTest(newTest);
     closeModal();
   }
