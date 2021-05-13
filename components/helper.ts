@@ -25,7 +25,7 @@ export function Now(): Date {
  * create a dummy test to form UI
  */
 export function CreateDummyTest(): ITest {
-  return { id: 'empty', tester: '', timestamp: {} };
+  return { id: 'empty', tester: '', timestamp: {}, firstCharm: false, secondCharm: false, thirdCharm: false };
 }
 
 /**
@@ -39,7 +39,7 @@ export function IsTestDummy(test: ITest): boolean {
  * create a add test to form UI
  */
 export function CreateAddTestPlaceHolder(): ITest {
-  return { id: 'add', tester: '', timestamp: {} };
+  return { id: 'add', tester: '', timestamp: {}, firstCharm: false, secondCharm: false, thirdCharm: false };
 }
 
 /**
@@ -70,6 +70,12 @@ export function CounterToShow(countDownMinutes: number, from: Date) {
   return { sign, percentage };
 }
 
+/**
+ * check if this test is time up from given date
+ * @param countDownMinutes
+ * @param from
+ * @returns
+ */
 export function IsTimeUp(countDownMinutes: number, from: Date) {
   const dayFrom = dayjs(from);
   const dayCurrent = dayjs();
@@ -77,4 +83,28 @@ export function IsTimeUp(countDownMinutes: number, from: Date) {
   const totalSeconds = countDownMinutes * 60;
 
   return diffSeconds >= totalSeconds;
+}
+
+/**
+ * check if this test is created today
+ * @param test
+ */
+export function IsTestToday(test: ITest) {
+  const testDate = dayjs(new Date(test.timestamp.start!));
+  return testDate.isSame(new Date(), 'day');
+}
+
+export function GetTestCountByMonth(tests: ITest[]) {
+  const months: { [key: number]: number } = {};
+
+  for (let i = 1; i < 13; i++) {
+    months[i] = 0;
+  }
+
+  for (let test of tests) {
+    const testDateMonth = dayjs(new Date(test.timestamp.start!)).month();
+    months[testDateMonth] += 1;
+  }
+
+  return Object.values(months);
 }

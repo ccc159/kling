@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { AddTestModal } from '../components/AddTestModal';
-import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy } from '../components/helper';
+import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy, IsTestToday } from '../components/helper';
 import { Styles } from '../components/styles';
 import { Test } from '../components/Test';
 import { IState, ITest } from '../types';
@@ -15,7 +15,8 @@ interface ITestPageProps {
 }
 
 export const TestPage = function ({ state, task }: ITestPageProps) {
-  const tests = state.tests;
+  // filter only tests for today
+  const tests = state.tests.filter((t) => IsTestToday(t));
 
   const ListItem = ({ test }: { test: ITest }) => {
     if (IsTestAddPlaceHolder(test)) {

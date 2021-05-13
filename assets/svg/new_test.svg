@@ -42,8 +42,8 @@
      lock-margins="false"
      inkscape:window-width="1267"
      inkscape:window-height="1040"
-     inkscape:window-x="413"
-     inkscape:window-y="62"
+     inkscape:window-x="213"
+     inkscape:window-y="48"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -57,7 +57,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -75,7 +75,7 @@
        opacity="1"
        stroke-linejoin="round"
        id="path2191"
-       style="clip-rule:evenodd;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" />
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;fill:#18746d;fill-opacity:1" />
     <g
        opacity="1"
        id="g2310"
@@ -143,34 +143,31 @@
            id="path2368" />
       </g>
     </g>
-    <g
+    <path
+       d="m 65.034989,56.652978 c -0.342635,-5.002477 3.3401,-9.329208 8.225367,-9.663641 4.885531,-0.334698 9.123627,3.449373 9.466262,8.452114 0.342636,5.002477 -3.3401,9.329208 -8.225631,9.663642 -4.885267,0.334698 -9.123362,-3.449638 -9.465998,-8.452115 z"
        opacity="1"
-       id="g2496"
-       style="clip-rule:evenodd;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round"
-       transform="matrix(0.26458333,0,0,0.26458333,-81.262659,-174.4767)">
-      <path
-         d="m 552.936,873.561 c -1.295,-18.907 12.624,-35.26 31.088,-36.524 18.465,-1.265 34.483,13.037 35.778,31.945 1.295,18.907 -12.624,35.26 -31.089,36.524 -18.464,1.265 -34.482,-13.038 -35.777,-31.945 z"
-         opacity="1"
-         fill="#ffffff"
-         id="path2490" />
-      <path
-         stroke="#3e84ba"
-         stroke-width="13.6752"
-         d="m 585.872,854.806 0.088,33.554"
-         fill="none"
-         stroke-linecap="round"
-         opacity="1"
-         stroke-linejoin="round"
-         id="path2492" />
-      <path
-         stroke="#3e84ba"
-         stroke-width="13.6752"
-         d="m 569.742,872.52 33.523,-0.02"
-         fill="none"
-         stroke-linecap="round"
-         opacity="1"
-         stroke-linejoin="round"
-         id="path2494" />
-    </g>
+       fill="#ffffff"
+       id="path2490"
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round" />
+    <path
+       stroke="#3e84ba"
+       stroke-width="3.61823"
+       d="m 73.749306,51.690718 0.02328,8.877829"
+       fill="none"
+       stroke-linecap="round"
+       opacity="1"
+       stroke-linejoin="round"
+       id="path2492"
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke:#18746d;stroke-opacity:1" />
+    <path
+       stroke="#3e84ba"
+       stroke-width="3.61823"
+       d="m 69.481577,56.377547 8.869627,-0.0053"
+       fill="none"
+       stroke-linecap="round"
+       opacity="1"
+       stroke-linejoin="round"
+       id="path2494"
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke:#18746d;stroke-opacity:1" />
   </g>
 </svg>

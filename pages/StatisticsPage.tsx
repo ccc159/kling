@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, ScrollView, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AddTestModal } from '../components/AddTestModal';
-import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy } from '../components/helper';
+import { CreateAddTestPlaceHolder, CreateDummyTest, GetTestCountByMonth, IsTestAddPlaceHolder, IsTestDummy } from '../components/helper';
 import { Styles } from '../components/styles';
 import { Test } from '../components/Test';
 import { IState, ITest } from '../types';
@@ -15,28 +15,18 @@ interface IStatisticsPageProps {
   task: ITask;
 }
 
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Otc', 'Nov', 'Dec'];
+
 export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
+  const tests = state.tests;
+
   return (
     <View key='statistics'>
       <ScrollView>
         <View style={styles.container}>
           <PageTitle text='Statistics'></PageTitle>
           <LineChart
-            data={{
-              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Otc', 'Nov', 'Dec'],
-              datasets: [
-                {
-                  data: [
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                  ],
-                },
-              ],
-            }}
+            data={{ labels: months, datasets: [{ data: GetTestCountByMonth(tests) }] }}
             width={windowWidth - 40} // from react-native
             height={200}
             yAxisLabel={'Test: '}
@@ -50,6 +40,7 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               style: {
                 borderRadius: 16,
+                margin: 5,
               },
               propsForDots: {
                 r: '6',
