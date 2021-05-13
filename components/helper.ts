@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { ITest } from '../types';
 
 /**
@@ -107,4 +107,19 @@ export function GetTestCountByMonth(tests: ITest[]) {
   }
 
   return Object.values(months);
+}
+
+export function GetTestCountByDays(tests: ITest[], days: Dayjs[]) {
+  const dayCount: { [key: number]: number } = {};
+
+  for (let i = 1; i < days.length; i++) {
+    dayCount[i] = days[i].day();
+  }
+
+  for (let test of tests) {
+    const testDateDay = dayjs(new Date(test.timestamp.start!)).day();
+    dayCount[testDateDay] += 1;
+  }
+
+  return Object.values(dayCount);
 }
