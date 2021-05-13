@@ -1,18 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { AddTestModal } from './components/AddTestModal';
-import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy } from './components/helper';
-import { Styles } from './components/styles';
-import { Test } from './components/Test';
+import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from './store';
+import PagerView from 'react-native-pager-view';
 import { ITest } from './types';
-
-const numColumns = 3;
+import { TestPage } from './pages/TestPage';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
-  const tests = state.tests;
 
   useEffect(() => {
     // load local storage
@@ -29,39 +24,14 @@ export const Dashboard = function () {
     }
   }
 
-  const ListItem = ({ test }: { test: ITest }) => {
-    if (IsTestAddPlaceHolder(test)) {
-      return <AddTestModal task={task} />;
-    }
-
-    if (IsTestDummy(test)) {
-      return <View style={[Styles.circleStyle, styles.itemInvisible]} />;
-    }
-    return <Test {...{ test, task }} />;
-  };
-
-  const fillTestsTo3Times = (tests: ITest[]) => {
-    const data = [...tests, CreateAddTestPlaceHolder()];
-    const numberOfFullRows = Math.floor(data.length / numColumns);
-
-    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
-    while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-      data.push(CreateDummyTest());
-      numberOfElementsLastRow++;
-    }
-
-    return data;
-  };
-
   return (
     <SafeAreaView style={styles.safearea}>
-      <ScrollView>
-        <View style={styles.container}>
-          {fillTestsTo3Times(tests).map((test, index) => (
-            <ListItem test={test} key={index} />
-          ))}
+      <PagerView style={styles.pagerView} initialPage={0}>
+        <TestPage {...{ state, task }} />
+        <View key='2'>
+          <Text>Second page</Text>
         </View>
-      </ScrollView>
+      </PagerView>
     </SafeAreaView>
   );
 };
@@ -74,14 +44,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
     backgroundColor: '#202B37',
   },
-  container: {
+  pagerView: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    margin: 20,
-    alignItems: 'flex-start',
-  },
-  itemInvisible: {
-    backgroundColor: 'transparent',
   },
 });
