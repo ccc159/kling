@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Pressable, View, Vibration } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Pressable, View, Vibration, Animated } from 'react-native';
 import { useInterval } from '../hooks/useInterval';
 import { ITask } from '../store/task';
 import { ITest, Result } from '../types';
@@ -13,6 +13,7 @@ import Phase1WaitSvg from '../assets/svg/phase1_wait.svg';
 import Phase1ReadySvg from '../assets/svg/phase1_ready.svg';
 import Phase2StartSvg from '../assets/svg/phase2_start.svg';
 import Phase2WaitSvg from '../assets/svg/phase2_wait.svg';
+import Phase2ReadySvg from '../assets/svg/phase2_ready.svg';
 import ResultInvalidSvg from '../assets/svg/result_invalid.svg';
 import ResultFillSvg from '../assets/svg/result_fill.svg';
 import ResultPositiveSvg from '../assets/svg/result_positive.svg';
@@ -24,6 +25,7 @@ import { SvgWrapper } from './SvgWrapper';
 import { MyKeyedText, MyText } from './MyText';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { PlayNotification } from './Sounds';
+import { usePulse } from '../hooks/usePulse';
 
 interface ITestProps {
   test: ITest;
@@ -49,6 +51,8 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
+
+  const scale = usePulse();
 
   const isReady = IsTimeUp(readyMinutes, fromDate);
   const isExpired = IsTimeUp(expireMinutes, fromDate);
@@ -99,7 +103,13 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
       <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        {isReady ? <Phase1ReadySvg width={CircleSize} height={CircleSize} /> : <Phase1WaitSvg width={SmallCircleSize} height={SmallCircleSize} />}
+        {isReady ? (
+          <Animated.View style={{ transform: [{ scale }] }}>
+            <Phase1ReadySvg width={CircleSize} height={CircleSize} />
+          </Animated.View>
+        ) : (
+          <Phase1WaitSvg width={SmallCircleSize} height={SmallCircleSize} />
+        )}
       </Pressable>
     </View>
   );
@@ -112,6 +122,8 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
   const [result, setResult] = useState<Result | null>(null);
+
+  const scale = usePulse();
 
   const isReady = IsTimeUp(readyMinutes, fromDate);
   const isExpired = IsTimeUp(expireMinutes, fromDate);
@@ -176,7 +188,13 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
       <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
       {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
       <Pressable onPress={onPress}>
-        {isReady ? <Phase2WaitSvg width={CircleSize} height={CircleSize} /> : <Phase2WaitSvg width={SmallCircleSize} height={SmallCircleSize} />}
+        {isReady ? (
+          <Animated.View style={{ transform: [{ scale }] }}>
+            <Phase2ReadySvg width={CircleSize} height={CircleSize} />
+          </Animated.View>
+        ) : (
+          <Phase2WaitSvg width={SmallCircleSize} height={SmallCircleSize} />
+        )}
       </Pressable>
     </View>
   );
