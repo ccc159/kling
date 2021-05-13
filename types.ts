@@ -29,6 +29,7 @@ export interface ITest {
   report?: IReport;
   firstCharm: boolean;
   secondCharm: boolean;
+  thirdCharm: boolean;
 }
 
 export interface IState {

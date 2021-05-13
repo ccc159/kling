@@ -161,10 +161,11 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
     setShowFillResultModal(false);
   }
 
-  function fillResult() {
+  async function fillResult() {
     if (result === null) return;
-    const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, end: new Date() }, result };
+    const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, end: new Date() }, result, thirdCharm: true };
     task.UpdateTest(updateTest);
+    await PlayNotification();
     closeModal();
   }
 
