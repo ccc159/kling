@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Pressable } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type IButton = {
   title: string;
@@ -8,9 +8,9 @@ type IButton = {
 };
 
 export const MyButton = ({ title, onPress, disabled }: IButton) => (
-  <Pressable disabled={disabled} style={[styles.button, { backgroundColor: disabled ? '#bbb' : '#33aad4' }]} onPress={onPress}>
+  <TouchableOpacity disabled={disabled} style={[styles.button, { backgroundColor: disabled ? '#bbb' : '#33aad4' }]} onPress={onPress}>
     <Text style={styles.textStyle}>{title}</Text>
-  </Pressable>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({

@@ -42,7 +42,7 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
         <MyTitle text={'Name of the test person?'} />
         <SvgWrapper Svg={Phase1Start} />
         <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
-        <MyButton title={'OK'} onPress={addTest} />
+        <MyButton disabled={tester === ''} title={'OK'} onPress={addTest} />
       </MyModal>
 
       <Pressable onPress={showModal}>
