@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, View, Vibration, Animated } from 'react-native';
+import { Pressable, View, Vibration, Animated, Text } from 'react-native';
 import { useInterval } from '../hooks/useInterval';
 import { ITask } from '../store/task';
 import { ITest, Result } from '../types';
@@ -37,12 +37,21 @@ export const Test = ({ test, task }: ITestProps) => {
 
   useInterval(() => setSeed(seed + 1), 1000);
 
-  if (test.result) return <TestResult {...{ task, test }} />;
+  let content: JSX.Element = <View></View>;
 
-  if (!test.timestamp.intermediate) return <TestPhase1 {...{ task, test }} />;
-  else if (!test.timestamp.end) return <TestPhase2 {...{ task, test }} />;
+  if (test.result) content = <TestResult {...{ task, test }} />;
 
-  return null;
+  if (!test.timestamp.intermediate) content = <TestPhase1 {...{ task, test }} />;
+  else if (!test.timestamp.end) content = <TestPhase2 {...{ task, test }} />;
+
+  return (
+    <View>
+      {content}
+      <Text style={{ position: 'absolute', width: '100%', textAlign: 'center', color: 'white', fontSize: 13, bottom: -13, height: 30 }}>
+        {test.tester}
+      </Text>
+    </View>
+  );
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
