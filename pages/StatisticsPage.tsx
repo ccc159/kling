@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { GetTestCountByDays, GetTestCountByMonth } from '../components/helper';
-import { IState, ITest } from '../types';
+import { IState, ITest, Result } from '../types';
 import { ITask } from '../store/task';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from 'react-native-chart-kit';
 import { windowWidth } from '../components/styles';
@@ -27,7 +27,7 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
 
   const carouselItems = ['7day', 'year'];
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [activeDay, setActiveDay] = useState<number>(dayjs().dayOfYear());
+  const [activeDay, setActiveDay] = useState<Dayjs>(dayjs());
 
   const renderItem = useCallback(({ item, index }: RenderItemProps) => {
     if (item === 'year') return <TestsPerYear {...{ tests }} />;
@@ -55,7 +55,7 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
             carouselRef={ref as any}
             dotsLength={carouselItems.length}
             activeDotIndex={activeIndex}
-            containerStyle={{ position: 'relative', top: -20 }}
+            containerStyle={{ position: 'absolute', top: 255 }}
             dotStyle={{
               width: 8,
               height: 8,
@@ -65,8 +65,10 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
             inactiveDotOpacity={0.4}
             inactiveDotScale={0.6}
           />
+          <Text style={styles.currentDay}>{'Testmap (click to select date)'} </Text>
           <HeatmapChart {...{ tests, activeDay, setActiveDay }} />
-          <Text>{activeDay}</Text>
+          <Text style={styles.currentDay}>Test result on date {activeDay.format('DD.MM')}</Text>
+          <MyPercentageChart {...{ tests, activeDay }} />
         </View>
       </ScrollView>
     </View>
@@ -111,10 +113,7 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
         decimalPlaces: 0, // optional, defaults to 2dp
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
-          borderRadius: 16,
-          margin: 5,
-        },
+
         propsForDots: {
           r: '6',
           strokeWidth: '2',
@@ -123,14 +122,14 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
       }}
       bezier
       style={{
-        marginVertical: 8,
+        marginBottom: 18,
         borderRadius: 16,
       }}
     />
   );
 };
 
-const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITest[]; activeDay: number; setActiveDay: (n: number) => void }) {
+const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITest[]; activeDay: Dayjs; setActiveDay: (n: Dayjs) => void }) {
   function getLast100Days() {
     const days: Dayjs[] = [];
     const today = dayjs();
@@ -154,7 +153,7 @@ const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITes
 
   return (
     <ContributionGraph
-      onDayPress={({ count, date }) => setActiveDay(dayjs(date).dayOfYear())}
+      onDayPress={({ count, date }) => setActiveDay(dayjs(date))}
       tooltipDataAttrs={(v) => ({})}
       values={data}
       endDate={new Date()}
@@ -176,6 +175,46 @@ const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITes
   );
 };
 
+const MyPercentageChart = function ({ tests, activeDay }: { tests: ITest[]; activeDay: Dayjs }) {
+  const testsOnDay = tests.filter((t) => {
+    const testDate = dayjs(new Date(t.timestamp.start!));
+    return testDate.isSame(activeDay, 'day');
+  });
+
+  const counts = [0, 0, 0];
+  for (let test of testsOnDay) {
+    if (test.result === Result.Negative) counts[0] += 1;
+    if (test.result === Result.Positive) counts[1] += 1;
+    if (test.result === Result.Invalid) counts[2] += 1;
+  }
+
+  const data = {
+    labels: ['Negative', 'Positive', 'Invalid'],
+    datasets: [{ data: counts }],
+  };
+
+  return (
+    <BarChart
+      style={{ borderRadius: 16, marginBottom: 30 }}
+      data={data}
+      width={windowWidth - 40}
+      height={200}
+      yAxisLabel='Test: '
+      yAxisSuffix=''
+      yAxisInterval={1}
+      showValuesOnTopOfBars
+      chartConfig={{
+        decimalPlaces: 0,
+        backgroundColor: '#26872a',
+        backgroundGradientFrom: '#43a047',
+        backgroundGradientTo: '#66bb6a',
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      }}
+    />
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -184,5 +223,13 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  currentDay: {
+    color: 'white',
+    fontSize: 13,
+    width: '100%',
+    textAlign: 'left',
+    marginTop: 20,
+    marginBottom: 5,
   },
 });
