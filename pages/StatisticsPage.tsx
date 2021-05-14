@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { GetTestCountByDays, GetTestCountByMonth } from '../components/helper';
 import { IState, ITest, Result } from '../types';
 import { ITask } from '../store/task';
-import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from 'react-native-chart-kit';
+import { LineChart, BarChart, ContributionGraph } from 'react-native-chart-kit';
 import { windowWidth } from '../components/styles';
 import { PageTitle } from '../components/Title';
 import dayjs, { Dayjs } from 'dayjs';
