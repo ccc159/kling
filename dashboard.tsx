@@ -7,36 +7,43 @@ import { ITest } from './types';
 import { TestPage } from './pages/TestPage';
 import { StatisticsPage } from './pages/StatisticsPage';
 import { AboutPage } from './pages/AboutPage';
+// import AppLoading from 'expo-app-loading';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
-    // load local storage
     loadLocalData();
   }, []);
 
   async function loadLocalData() {
-    try {
-      setLoading(true);
-      const jsonValue = await AsyncStorage.getItem('tests');
-      const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
-      task.LoadData(tests);
-      setLoading(false);
-    } catch (e) {
-      // error reading value
-    }
+    setIsReady(false);
+    const jsonValue = await AsyncStorage.getItem('tests');
+    const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
+    task.LoadData(tests);
+    setIsReady(true);
   }
 
-  if (loading) return null;
+  // if (!isReady) {
+  //   return (
+  //     <AppLoading
+  //       startAsync={loadLocalData}
+  //       onFinish={() => {
+  //         setIsReady(true);
+  //       }}
+  //       onError={console.warn}
+  //     />
+  //   );
+  // }
+  if (!isReady) return null;
 
   return (
     <SafeAreaView style={styles.safearea}>
       <PagerView style={styles.pagerView} initialPage={0}>
         <TestPage {...{ state, task }} />
         <StatisticsPage {...{ state, task }} />
-        <AboutPage />
+        <AboutPage {...{ task }} />
       </PagerView>
     </SafeAreaView>
   );

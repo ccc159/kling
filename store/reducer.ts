@@ -17,6 +17,10 @@ export const reducer: React.Reducer<IState, IAction> = (state: IState = initialS
     const jsonValue = JSON.stringify(newTests);
     AsyncStorage.setItem('tests', jsonValue);
     return { ...state, tests: newTests };
+  } else if (type === 'RESET_APP') {
+    const jsonValue = JSON.stringify([]);
+    AsyncStorage.setItem('tests', jsonValue);
+    return { ...state, tests: [] };
   }
 
   return state;

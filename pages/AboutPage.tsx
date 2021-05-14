@@ -1,10 +1,25 @@
 import React from 'react';
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { PageTitle } from '../components/Title';
 import IconSvg from '../assets/svg/icon.svg';
 import { windowWidth } from '../components/styles';
+import { ITask } from '../store/task';
 
-export const AboutPage = function () {
+export const AboutPage = function ({ task }: { task: ITask }) {
+  const resetAlert = () =>
+    Alert.alert(
+      'Reset',
+      'Are you sure to reset app to factory settings? All stored data will be cleared.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        { text: 'Reset', onPress: task.ResetApp, style: 'destructive' },
+      ],
+      { cancelable: false }
+    );
+
   return (
     <View key='statistics'>
       <ScrollView>
@@ -25,6 +40,11 @@ export const AboutPage = function () {
           <Text style={styles.smallText}>
             <Text style={{ color: '#fb8c00' }} onPress={() => Linking.openURL('https://kling-app.com/privatepolicy')}>
               private policy
+            </Text>
+          </Text>
+          <Text style={styles.smallText}>
+            <Text style={{ color: '#eb4034' }} onPress={resetAlert}>
+              reset app
             </Text>
           </Text>
         </View>
