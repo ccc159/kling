@@ -27,9 +27,6 @@ export interface ITest {
   timestamp: ITimestamp;
   result?: Result;
   report?: IReport;
-  firstCharm: boolean;
-  secondCharm: boolean;
-  thirdCharm: boolean;
 }
 
 export interface IState {

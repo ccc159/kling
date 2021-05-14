@@ -25,7 +25,7 @@ export function Now(): Date {
  * create a dummy test to form UI
  */
 export function CreateDummyTest(): ITest {
-  return { id: 'empty', tester: '', timestamp: {}, firstCharm: false, secondCharm: false, thirdCharm: false };
+  return { id: 'empty', tester: '', timestamp: {} };
 }
 
 /**
@@ -39,7 +39,7 @@ export function IsTestDummy(test: ITest): boolean {
  * create a add test to form UI
  */
 export function CreateAddTestPlaceHolder(): ITest {
-  return { id: 'add', tester: '', timestamp: {}, firstCharm: false, secondCharm: false, thirdCharm: false };
+  return { id: 'add', tester: '', timestamp: {} };
 }
 
 /**
