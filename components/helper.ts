@@ -112,14 +112,15 @@ export function GetTestCountByMonth(tests: ITest[]) {
 export function GetTestCountByDays(tests: ITest[], days: Dayjs[]) {
   const dayCount: { [key: number]: number } = {};
 
-  for (let i = 1; i < days.length; i++) {
-    dayCount[i] = days[i].day();
+  for (let i = 0; i < days.length; i++) {
+    dayCount[days[i].date()] = 0;
   }
 
   for (let test of tests) {
-    const testDateDay = dayjs(new Date(test.timestamp.start!)).day();
+    const testDateDay = dayjs(new Date(test.timestamp.start!)).date();
     dayCount[testDateDay] += 1;
   }
+
 
   return Object.values(dayCount);
 }

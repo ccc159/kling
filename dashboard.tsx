@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { AppContext } from './store';
 import PagerView from 'react-native-pager-view';
 import { ITest } from './types';
@@ -9,6 +9,7 @@ import { StatisticsPage } from './pages/StatisticsPage';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // load local storage
@@ -17,13 +18,17 @@ export const Dashboard = function () {
 
   async function loadLocalData() {
     try {
+      setLoading(true);
       const jsonValue = await AsyncStorage.getItem('tests');
       const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
       task.LoadData(tests);
+      setLoading(false);
     } catch (e) {
       // error reading value
     }
   }
+
+  if (loading) return null;
 
   return (
     <SafeAreaView style={styles.safearea}>

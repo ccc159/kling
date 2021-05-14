@@ -25,7 +25,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
   const tests = state.tests;
 
-  const carouselItems = ['year', '7day'];
+  const carouselItems = ['7day', 'year'];
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const renderItem = useCallback(({ item, index }: RenderItemProps) => {
