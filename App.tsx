@@ -3,6 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import { Dashboard } from './dashboard';
 import { ContextProvider } from './store';
 import { useKeepAwake } from 'expo-keep-awake';
+import dayOfYear from 'dayjs/plugin/dayOfYear';
+import dayjs from 'dayjs';
+
+dayjs.extend(dayOfYear);
 
 export default function App() {
   useKeepAwake();

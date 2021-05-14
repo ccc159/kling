@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { GetTestCountByDays, GetTestCountByMonth } from '../components/helper';
 import { IState, ITest } from '../types';
@@ -27,6 +27,7 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
 
   const carouselItems = ['7day', 'year'];
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeDay, setActiveDay] = useState<number>(dayjs().dayOfYear());
 
   const renderItem = useCallback(({ item, index }: RenderItemProps) => {
     if (item === 'year') return <TestsPerYear {...{ tests }} />;
@@ -64,6 +65,8 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
             inactiveDotOpacity={0.4}
             inactiveDotScale={0.6}
           />
+          <HeatmapChart {...{ tests, activeDay, setActiveDay }} />
+          <Text>{activeDay}</Text>
         </View>
       </ScrollView>
     </View>
@@ -77,6 +80,7 @@ const TestsPerYear = function ({ tests }: { tests: ITest[] }) {
 const TestsPer7Days = function ({ tests }: { tests: ITest[] }) {
   const last7Days = getLast7Days();
   const testCounts = GetTestCountByDays(tests, last7Days);
+  const data = last7Days.map((d) => testCounts[d.dayOfYear().toString()]);
   const last7DaysLabels = last7Days.map((d) => d.format('DD.MM'));
 
   function getLast7Days() {
@@ -89,7 +93,7 @@ const TestsPer7Days = function ({ tests }: { tests: ITest[] }) {
     return days;
   }
 
-  return <MyLineChart labels={last7DaysLabels} datasets={[{ data: testCounts }]} />;
+  return <MyLineChart labels={last7DaysLabels} datasets={[{ data }]} />;
 };
 
 const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets: { data: number[] }[] }) {
@@ -121,6 +125,52 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
       style={{
         marginVertical: 8,
         borderRadius: 16,
+      }}
+    />
+  );
+};
+
+const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITest[]; activeDay: number; setActiveDay: (n: number) => void }) {
+  function getLast100Days() {
+    const days: Dayjs[] = [];
+    const today = dayjs();
+    days.unshift(today);
+    for (let i = 1; i < 100; i++) {
+      days.unshift(today.subtract(i, 'd'));
+    }
+    return days;
+  }
+
+  const last100Days = getLast100Days();
+
+  const testCounts = GetTestCountByDays(tests, last100Days);
+  const count = last100Days.map((d) => testCounts[d.dayOfYear().toString()]);
+
+  const data: { date: string; count: number }[] = [];
+
+  for (let i = 0; i < 100; i++) {
+    data.push({ date: last100Days[i].format('YYYY-MM-DD'), count: count[i] });
+  }
+
+  return (
+    <ContributionGraph
+      onDayPress={({ count, date }) => setActiveDay(dayjs(date).dayOfYear())}
+      tooltipDataAttrs={(v) => ({})}
+      values={data}
+      endDate={new Date()}
+      numDays={100}
+      width={windowWidth - 40}
+      height={220}
+      chartConfig={{
+        decimalPlaces: 0,
+        backgroundColor: '#26872a',
+        backgroundGradientFrom: '#43a047',
+        backgroundGradientTo: '#66bb6a',
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        style: {
+          borderRadius: 16,
+        },
       }}
     />
   );
