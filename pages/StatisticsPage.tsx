@@ -130,25 +130,25 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
 };
 
 const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITest[]; activeDay: Dayjs; setActiveDay: (n: Dayjs) => void }) {
-  function getLast100Days() {
+  function getLast80Days() {
     const days: Dayjs[] = [];
     const today = dayjs();
     days.unshift(today);
-    for (let i = 1; i < 100; i++) {
+    for (let i = 1; i < 80; i++) {
       days.unshift(today.subtract(i, 'd'));
     }
     return days;
   }
 
-  const last100Days = getLast100Days();
+  const last80Days = getLast80Days();
 
-  const testCounts = GetTestCountByDays(tests, last100Days);
-  const count = last100Days.map((d) => testCounts[d.dayOfYear().toString()]);
+  const testCounts = GetTestCountByDays(tests, last80Days);
+  const count = last80Days.map((d) => testCounts[d.dayOfYear().toString()]);
 
   const data: { date: string; count: number }[] = [];
 
-  for (let i = 0; i < 100; i++) {
-    data.push({ date: last100Days[i].format('YYYY-MM-DD'), count: count[i] });
+  for (let i = 0; i < 80; i++) {
+    data.push({ date: last80Days[i].format('YYYY-MM-DD'), count: count[i] });
   }
 
   return (
@@ -157,7 +157,7 @@ const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITes
       tooltipDataAttrs={(v) => ({})}
       values={data}
       endDate={new Date()}
-      numDays={100}
+      numDays={80}
       width={windowWidth - 40}
       height={220}
       chartConfig={{
