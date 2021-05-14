@@ -30,7 +30,7 @@ export const AboutPage = function ({ task }: { task: ITask }) {
             This app is developed to help making batch quick tests easier. It is totally free and open source. It does not access or track any of your
             personal data. If you find this app helpful, please recommend it to others who might need it. Thanks! ❤️
           </Text>
-          <Text style={styles.smallText}>version: 0.1.0</Text>
+          <Text style={styles.smallText}>version: 1.0.0</Text>
           <Text style={styles.smallText}>
             website:{' '}
             <Text style={{ color: '#4d8dc3' }} onPress={() => Linking.openURL('https://kling-app.com')}>
