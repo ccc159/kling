@@ -26,6 +26,8 @@ import { MyKeyedText, MyText } from './MyText';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { PlayNotification } from './Sounds';
 import { usePulse } from '../hooks/usePulse';
+import * as Notifications from 'expo-notifications';
+import { PHASE1_EXPIRE_MITUTES, PHASE1_READY_MITUTES, PHASE2_EXPIRE_MITUTES, PHASE2_READY_MITUTES } from '../config';
 
 interface ITestProps {
   test: ITest;
@@ -55,29 +57,14 @@ export const Test = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 1;
-  const expireMinutes = 60;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
 
   const scale = usePulse();
 
-  const isReady = IsTimeUp(readyMinutes, fromDate);
-  const isExpired = IsTimeUp(expireMinutes, fromDate);
-
-  useEffect(() => {
-    if (isReady && !test.firstCharm) {
-      markReady();
-    }
-  }, [isReady]);
-
-  async function markReady() {
-    const newTest: ITest = { ...test, firstCharm: true };
-    task.UpdateTest(newTest);
-    Vibration.vibrate();
-    await PlayNotification();
-  }
+  const isReady = IsTimeUp(PHASE1_READY_MITUTES, fromDate);
+  const isExpired = IsTimeUp(PHASE1_EXPIRE_MITUTES, fromDate);
 
   useEffect(() => {
     if (!isExpired) return;
@@ -98,19 +85,38 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   function startNextPhase() {
     const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, intermediate: new Date() } };
     task.UpdateTest(updateTest);
+    scheduleReadyPushNotification(updateTest);
     closeModal();
+  }
+
+  async function scheduleReadyPushNotification(test: ITest) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: '⏰ Time up!',
+        body: `${test.tester}'s test is ready to see the result.`,
+        data: { test },
+        sound: true,
+      },
+      trigger: { seconds: PHASE2_READY_MITUTES * 60 },
+    });
   }
 
   return (
     <View style={Styles.circleStyle}>
       <MyModal visible={showNextPhaseModal} setVisible={setShowNextPhaseModal}>
-        <MyTitle text={'Readt to make drops'} />
+        <MyTitle text={'Ready to make drops'} />
         <MyText>Have 4 drops in the test case.</MyText>
         <SvgWrapper Svg={Phase2StartSvg} />
         <MyButton title={'Done'} onPress={startNextPhase} />
       </MyModal>
-      <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
-      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
+      <InProgressModal
+        tester={test.tester}
+        show={showProgressModal}
+        setShow={setShowProgressModal}
+        countDownMinutes={PHASE1_READY_MITUTES}
+        from={fromDate}
+      />
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={PHASE1_READY_MITUTES} from={fromDate} />}
       <Pressable onPress={onPress}>
         {isReady ? (
           <Animated.View style={{ transform: [{ scale }] }}>
@@ -125,8 +131,6 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase2 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 15;
-  const expireMinutes = 30;
   const fromDate = new Date(test.timestamp.intermediate!);
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
@@ -134,21 +138,8 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
 
   const scale = usePulse();
 
-  const isReady = IsTimeUp(readyMinutes, fromDate);
-  const isExpired = IsTimeUp(expireMinutes, fromDate);
-
-  useEffect(() => {
-    if (isReady && !test.secondCharm) {
-      markReady();
-    }
-  }, [isReady]);
-
-  async function markReady() {
-    const newTest: ITest = { ...test, secondCharm: true };
-    task.UpdateTest(newTest);
-    Vibration.vibrate();
-    await PlayNotification();
-  }
+  const isReady = IsTimeUp(PHASE2_READY_MITUTES, fromDate);
+  const isExpired = IsTimeUp(PHASE2_EXPIRE_MITUTES, fromDate);
 
   useEffect(() => {
     if (!isExpired) return;
@@ -172,7 +163,7 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
 
   async function fillResult() {
     if (result === null) return;
-    const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, end: new Date() }, result, thirdCharm: true };
+    const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, end: new Date() }, result };
     task.UpdateTest(updateTest);
     await PlayNotification();
     closeModal();
@@ -195,8 +186,14 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
         </View>
         <MyButton disabled={result === null} title={'Confirm'} onPress={fillResult} />
       </MyModal>
-      <InProgressModal tester={test.tester} show={showProgressModal} setShow={setShowProgressModal} countDownMinutes={readyMinutes} from={fromDate} />
-      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={readyMinutes} from={fromDate} />}
+      <InProgressModal
+        tester={test.tester}
+        show={showProgressModal}
+        setShow={setShowProgressModal}
+        countDownMinutes={PHASE2_READY_MITUTES}
+        from={fromDate}
+      />
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={PHASE2_READY_MITUTES} from={fromDate} />}
       <Pressable onPress={onPress}>
         {isReady ? (
           <Animated.View style={{ transform: [{ scale }] }}>
@@ -263,3 +260,14 @@ const TestResult = ({ test, task }: ITestProps) => {
     </View>
   );
 };
+
+async function scheduleReadyPushNotification(tester: string) {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: '⏰ Time up!',
+      body: `${tester}'s test is ready to proceed.`,
+      data: { tester },
+    },
+    trigger: { seconds: 1 },
+  });
+}

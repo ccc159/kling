@@ -11,6 +11,8 @@ import { MyTitle } from './Title';
 import Phase1Start from '../assets/svg/phase1_start.svg';
 import NewTest from '../assets/svg/new_test.svg';
 import { SvgWrapper } from './SvgWrapper';
+import * as Notifications from 'expo-notifications';
+import { PHASE1_READY_MITUTES } from '../config';
 
 interface IAddTestModal {
   task: ITask;
@@ -31,9 +33,22 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
 
   function addTest() {
     if (tester === '') return;
-    const newTest: ITest = { id: GenerateID(), tester, timestamp: { start: Now() }, firstCharm: false, secondCharm: false, thirdCharm: false };
+    const newTest: ITest = { id: GenerateID(), tester, timestamp: { start: Now() } };
     task.AddTest(newTest);
+    scheduleReadyPushNotification(newTest);
     closeModal();
+  }
+
+  async function scheduleReadyPushNotification(test: ITest) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: '⏰ Time up!',
+        body: `${test.tester}'s test is ready to proceed.`,
+        data: { test },
+        sound: true,
+      },
+      trigger: { seconds: PHASE1_READY_MITUTES * 60 },
+    });
   }
 
   return (
