@@ -6,6 +6,7 @@ import PagerView from 'react-native-pager-view';
 import { ITest } from './types';
 import { TestPage } from './pages/TestPage';
 import { StatisticsPage } from './pages/StatisticsPage';
+import { AboutPage } from './pages/AboutPage';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
@@ -35,6 +36,7 @@ export const Dashboard = function () {
       <PagerView style={styles.pagerView} initialPage={0}>
         <TestPage {...{ state, task }} />
         <StatisticsPage {...{ state, task }} />
+        <AboutPage />
       </PagerView>
     </SafeAreaView>
   );
