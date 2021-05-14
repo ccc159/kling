@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, StatusBar as TopBar } from 'react-native';
 import { AppContext } from './store';
 import PagerView from 'react-native-pager-view';
 import { ITest } from './types';
@@ -8,6 +8,7 @@ import { TestPage } from './pages/TestPage';
 import { StatisticsPage } from './pages/StatisticsPage';
 import { AboutPage } from './pages/AboutPage';
 import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'expo-status-bar';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
@@ -40,6 +41,7 @@ export const Dashboard = function () {
 
   return (
     <SafeAreaView style={styles.safearea}>
+      <StatusBar style='light' backgroundColor='#202B37' />
       <PagerView style={styles.pagerView} initialPage={0}>
         <TestPage {...{ state, task }} />
         <StatisticsPage {...{ state, task }} />
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: TopBar.currentHeight || 0,
     backgroundColor: '#202B37',
   },
   pagerView: {
