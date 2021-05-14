@@ -55,8 +55,8 @@ export const Test = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase1 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 0.1;
-  const expireMinutes = 20;
+  const readyMinutes = 1;
+  const expireMinutes = 60;
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
@@ -125,7 +125,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 };
 
 const TestPhase2 = ({ test, task }: ITestProps) => {
-  const readyMinutes = 0.1;
+  const readyMinutes = 15;
   const expireMinutes = 30;
   const fromDate = new Date(test.timestamp.intermediate!);
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
