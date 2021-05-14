@@ -7,15 +7,15 @@ import { ITest } from './types';
 import { TestPage } from './pages/TestPage';
 import { StatisticsPage } from './pages/StatisticsPage';
 import { AboutPage } from './pages/AboutPage';
-// import AppLoading from 'expo-app-loading';
+import AppLoading from 'expo-app-loading';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
   const [isReady, setIsReady] = useState<boolean>(false);
 
-  useEffect(() => {
-    loadLocalData();
-  }, []);
+  // useEffect(() => {
+  //   loadLocalData();
+  // }, []);
 
   async function loadLocalData() {
     setIsReady(false);
@@ -25,18 +25,18 @@ export const Dashboard = function () {
     setIsReady(true);
   }
 
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadLocalData}
-  //       onFinish={() => {
-  //         setIsReady(true);
-  //       }}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
-  if (!isReady) return null;
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={loadLocalData}
+        onFinish={() => {
+          setIsReady(true);
+        }}
+        onError={console.warn}
+      />
+    );
+  }
+  // if (!isReady) return null;
 
   return (
     <SafeAreaView style={styles.safearea}>
