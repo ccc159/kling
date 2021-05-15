@@ -21,7 +21,7 @@ export const TestPage = function ({ state, task }: ITestPageProps) {
 
   const ListItem = ({ test }: { test: ITest }) => {
     if (IsTestAddPlaceHolder(test)) {
-      return <AddTestModal task={task} />;
+      return <AddTestModal {...{ task }} />;
     }
 
     if (IsTestDummy(test)) {

@@ -11,7 +11,8 @@ import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
-import { PlayNotification } from './components/Sounds';
+import { Audio } from 'expo-av';
+import { PlayExpired, PlayReady } from './components/Sounds';
 
 Notifications.setNotificationHandler({
   handleNotification: async (notification) => {
@@ -22,8 +23,11 @@ Notifications.setNotificationHandler({
         shouldSetBadge: false,
       };
     } else {
+      const state = notification.request.content.data.state;
       Vibration.vibrate();
-      await PlayNotification();
+      console.log(state);
+      if (state === 'ready') PlayReady();
+      else if (state === 'expired') PlayExpired();
       return {
         shouldShowAlert: false,
         shouldPlaySound: false,

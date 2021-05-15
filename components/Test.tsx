@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, View, Vibration, Animated, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Pressable, View, Animated, Text } from 'react-native';
 import { useInterval } from '../hooks/useInterval';
 import { ITask } from '../store/task';
 import { ITest, Result } from '../types';
@@ -24,10 +24,10 @@ import { MyTitle } from './Title';
 import { SvgWrapper } from './SvgWrapper';
 import { MyKeyedText, MyText } from './MyText';
 import RadioGroup from 'react-native-radio-buttons-group';
-import { PlayNotification } from './Sounds';
 import { usePulse } from '../hooks/usePulse';
 import * as Notifications from 'expo-notifications';
 import { PHASE1_EXPIRE_MITUTES, PHASE1_READY_MITUTES, PHASE2_EXPIRE_MITUTES, PHASE2_READY_MITUTES } from '../config';
+import { PlayExpired, PlayNegative, PlayPositive } from './Sounds';
 
 interface ITestProps {
   test: ITest;
@@ -42,8 +42,7 @@ export const Test = ({ test, task }: ITestProps) => {
   let content: JSX.Element = <View></View>;
 
   if (test.result) content = <TestResult {...{ task, test }} />;
-
-  if (!test.timestamp.intermediate) content = <TestPhase1 {...{ task, test }} />;
+  else if (!test.timestamp.intermediate) content = <TestPhase1 {...{ task, test }} />;
   else if (!test.timestamp.end) content = <TestPhase2 {...{ task, test }} />;
 
   return (
@@ -68,9 +67,9 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
 
   useEffect(() => {
     if (!isExpired) return;
-    Vibration.vibrate();
     const updateTest: ITest = { ...test, result: Result.Invalid };
     task.UpdateTest(updateTest);
+    PlayExpired();
   }, [isExpired]);
 
   function onPress() {
@@ -86,6 +85,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
     const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, intermediate: new Date() } };
     task.UpdateTest(updateTest);
     scheduleReadyPushNotification(updateTest);
+    scheduleExpirePushNotification(updateTest);
     closeModal();
   }
 
@@ -94,10 +94,22 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
       content: {
         title: '⏰ Time up!',
         body: `${test.tester}'s test is ready to see the result.`,
-        data: { test },
+        data: { test, state: 'ready' },
         sound: true,
       },
       trigger: { seconds: PHASE2_READY_MITUTES * 60 },
+    });
+  }
+
+  async function scheduleExpirePushNotification(test: ITest) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: '⌛ Test expired!',
+        body: `${test.tester}'s test is expired.`,
+        data: { test, state: 'expired' },
+        sound: true,
+      },
+      trigger: { seconds: PHASE2_EXPIRE_MITUTES * 60 },
     });
   }
 
@@ -143,9 +155,9 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
 
   useEffect(() => {
     if (!isExpired) return;
-    Vibration.vibrate();
     const updateTest: ITest = { ...test, result: Result.Invalid };
     task.UpdateTest(updateTest);
+    PlayExpired();
   }, [isExpired]);
 
   function onPress() {
@@ -165,7 +177,9 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
     if (result === null) return;
     const updateTest: ITest = { ...test, timestamp: { ...test.timestamp, end: new Date() }, result };
     task.UpdateTest(updateTest);
-    await PlayNotification();
+    if (result === Result.Negative) PlayNegative();
+    else if (result === Result.Positive) PlayPositive();
+    else if (result === Result.Invalid) PlayExpired();
     closeModal();
   }
 

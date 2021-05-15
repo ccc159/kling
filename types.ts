@@ -1,3 +1,5 @@
+import { Audio } from 'expo-av';
+
 export enum Result {
   Negative = 'Negative',
   Positive = 'Positive',
