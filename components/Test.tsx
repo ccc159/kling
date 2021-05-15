@@ -117,7 +117,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
     <View style={Styles.circleStyle}>
       <MyModal visible={showNextPhaseModal} setVisible={setShowNextPhaseModal}>
         <MyTitle text={'Ready to make drops'} />
-        <MyText>Have 4 drops in the test case.</MyText>
+        <MyText>Turn the tube upside down and lightly squeeze 4 drops onto the specimen well.</MyText>
         <SvgWrapper Svg={Phase2StartSvg} />
         <MyButton title={'Done'} onPress={startNextPhase} />
       </MyModal>

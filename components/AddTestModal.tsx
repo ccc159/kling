@@ -13,6 +13,7 @@ import NewTest from '../assets/svg/new_test.svg';
 import { SvgWrapper } from './SvgWrapper';
 import * as Notifications from 'expo-notifications';
 import { PHASE1_EXPIRE_MITUTES, PHASE1_READY_MITUTES } from '../config';
+import { MyText } from './MyText';
 
 interface IAddTestModal {
   task: ITask;
@@ -69,6 +70,7 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
       <MyModal visible={modalVisible} setVisible={setModalVisible}>
         <MyTitle text={'Name of the test person?'} />
         <SvgWrapper Svg={Phase1Start} />
+        <MyText style={{ marginBottom: 5 }}>Make sure the swab is put into the bottom of the extraction tube.</MyText>
         <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
         <MyButton disabled={tester === ''} title={'OK'} onPress={addTest} />
       </MyModal>
