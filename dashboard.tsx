@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar as TopBar, Platform, AppState, Vibration } from 'react-native';
 import { AppContext } from './store';
 import PagerView from 'react-native-pager-view';
@@ -11,31 +11,7 @@ import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
-import { Audio } from 'expo-av';
 import { PlayExpired, PlayReady } from './components/Sounds';
-
-Notifications.setNotificationHandler({
-  handleNotification: async (notification) => {
-    if (AppState.currentState === 'background') {
-      return {
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-      };
-    } else {
-      const state = notification.request.content.data.state;
-      Vibration.vibrate();
-      console.log(state);
-      if (state === 'ready') PlayReady();
-      else if (state === 'expired') PlayExpired();
-      return {
-        shouldShowAlert: false,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      };
-    }
-  },
-});
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
@@ -55,6 +31,8 @@ export const Dashboard = function () {
       console.log(response);
     });
 
+    registerNotificationHandler();
+
     return () => {
       Notifications.removeNotificationSubscription(notificationListener);
       Notifications.removeNotificationSubscription(responseListener);
@@ -67,6 +45,33 @@ export const Dashboard = function () {
     const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
     task.LoadData(tests);
     setIsReady(true);
+  }
+
+  function registerNotificationHandler() {
+    Notifications.setNotificationHandler({
+      handleNotification: async (notification) => {
+        if (AppState.currentState === 'background') {
+          return {
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false,
+          };
+        } else {
+          const state = notification.request.content.data.state;
+          const test = notification.request.content.data.test as ITest;
+          Vibration.vibrate();
+          if (state === 'ready') {
+            PlayReady();
+            cancelNotificationByTestID(test.id);
+          } else if (state === 'expired') PlayExpired();
+          return {
+            shouldShowAlert: false,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+          };
+        }
+      },
+    });
   }
 
   if (!isReady) {
@@ -136,4 +141,10 @@ async function registerForPushNotificationsAsync() {
   }
 
   return token;
+}
+
+async function cancelNotificationByTestID(testID: string) {
+  const notifications = await Notifications.getAllScheduledNotificationsAsync();
+  const forCurrentTest = notifications.find((n) => n.content.data.test && (n.content.data.test as ITest).id === testID);
+  if (forCurrentTest) await Notifications.cancelScheduledNotificationAsync(forCurrentTest.identifier);
 }
