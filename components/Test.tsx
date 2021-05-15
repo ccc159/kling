@@ -274,14 +274,3 @@ const TestResult = ({ test, task }: ITestProps) => {
     </View>
   );
 };
-
-async function scheduleReadyPushNotification(tester: string) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: '⏰ Time up!',
-      body: `${tester}'s test is ready to proceed.`,
-      data: { tester },
-    },
-    trigger: { seconds: 1 },
-  });
-}

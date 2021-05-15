@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { PlayExpired, PlayReady } from './components/Sounds';
+import { FakeTestsData } from './components/helper';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
@@ -43,6 +44,7 @@ export const Dashboard = function () {
     setIsReady(false);
     const jsonValue = await AsyncStorage.getItem('tests');
     const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
+    // const tests = FakeTestsData();
     task.LoadData(tests);
     setIsReady(true);
   }

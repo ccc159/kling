@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { ITest } from '../types';
+import { ITest, Result } from '../types';
 
 /**
  * Generate an unique 6 character number/letter id
@@ -122,4 +122,34 @@ export function GetTestCountByDays(tests: ITest[], days: Dayjs[]) {
   }
 
   return dayCount;
+}
+
+export function FakeTestsData() {
+  function getLast100Days() {
+    const days: Dayjs[] = [];
+    const today = dayjs();
+    days.unshift(today);
+    for (let i = 1; i < 100; i++) {
+      days.unshift(today.subtract(i, 'd'));
+    }
+    return days;
+  }
+
+  function createRandomTestsForday(day: Dayjs): ITest[] {
+    return new Array(Math.floor(Math.random() * 50))
+      .fill(0)
+      .map((s) => ({
+        id: GenerateID(),
+        tester: 'Name',
+        timestamp: { start: day.toDate() },
+        result: Object.keys(Result)[Math.floor(Math.random() * 3)] as Result,
+      }));
+  }
+  const last100Days = getLast100Days();
+
+  let tests: ITest[] = [];
+  for (let day of last100Days) {
+    tests = [...tests, ...createRandomTestsForday(day)];
+  }
+  return tests;
 }
