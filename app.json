@@ -47,6 +47,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "notification": {
+      "icon": "./assets/adaptive-icon.png",
+      "color": "#202B37"
     }
   }
 }
