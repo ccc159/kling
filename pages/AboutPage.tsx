@@ -38,8 +38,8 @@ export const AboutPage = function ({ task }: { task: ITask }) {
             </Text>
           </Text>
           <Text style={styles.smallText}>
-            <Text style={{ color: '#fb8c00' }} onPress={() => Linking.openURL('https://kling-app.com/privatepolicy')}>
-              private policy
+            <Text style={{ color: '#fb8c00' }} onPress={() => Linking.openURL('https://kling-app.com/privacypolicy')}>
+              privacy policy
             </Text>
           </Text>
           <Text style={styles.smallText}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     // width: '100%',
     // textAlign: 'left',
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 8,
+    marginBottom: 8,
   },
 });
