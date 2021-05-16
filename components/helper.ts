@@ -128,7 +128,6 @@ export function FakeTestsData() {
   function getLast100Days() {
     const days: Dayjs[] = [];
     const today = dayjs();
-    days.unshift(today);
     for (let i = 1; i < 100; i++) {
       days.unshift(today.subtract(i, 'd'));
     }
@@ -136,14 +135,12 @@ export function FakeTestsData() {
   }
 
   function createRandomTestsForday(day: Dayjs): ITest[] {
-    return new Array(Math.floor(Math.random() * 50))
-      .fill(0)
-      .map((s) => ({
-        id: GenerateID(),
-        tester: 'Name',
-        timestamp: { start: day.toDate() },
-        result: Object.keys(Result)[Math.floor(Math.random() * 3)] as Result,
-      }));
+    return new Array(Math.floor(Math.random() * 50)).fill(0).map((s) => ({
+      id: GenerateID(),
+      tester: 'Name',
+      timestamp: { start: day.toDate() },
+      result: Object.keys(Result)[Math.floor(Math.random() * 3)] as Result,
+    }));
   }
   const last100Days = getLast100Days();
 
@@ -151,5 +148,18 @@ export function FakeTestsData() {
   for (let day of last100Days) {
     tests = [...tests, ...createRandomTestsForday(day)];
   }
+
+  // tests for today
+  tests.push({ id: GenerateID(), tester: 'Mirana', timestamp: { start: dayjs().subtract(100, 'minutes').toDate() }, result: Result.Negative });
+  tests.push({ id: GenerateID(), tester: 'Lukas', timestamp: { start: dayjs().subtract(100, 'minutes').toDate() }, result: Result.Negative });
+  tests.push({ id: GenerateID(), tester: 'Johannes', timestamp: { start: dayjs().subtract(100, 'minutes').toDate() }, result: Result.Negative });
+  tests.push({ id: GenerateID(), tester: 'Philip', timestamp: { start: dayjs().subtract(100, 'minutes').toDate() }, result: Result.Positive });
+  tests.push({ id: GenerateID(), tester: 'Fabian', timestamp: { start: dayjs().subtract(100, 'minutes').toDate() }, result: Result.Negative });
+  tests.push({
+    id: GenerateID(),
+    tester: 'Benedikt',
+    timestamp: { start: dayjs().subtract(100, 'minutes').toDate(), intermediate: dayjs().subtract(80, 'minutes').toDate() },
+  });
+
   return tests;
 }
