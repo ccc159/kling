@@ -35,7 +35,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.jingchengchen.kling",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.1",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
     },
     "android": {
       "package": "com.jingchengchen.kling",
@@ -52,6 +55,10 @@
     "notification": {
       "icon": "./assets/adaptive-icon.png",
       "color": "#202B37"
+    },
+    "locales": {
+      "en": "./languages/en.json",
+      "de": "./languages/de.json"
     }
   }
 }
