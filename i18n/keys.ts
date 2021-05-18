@@ -8,6 +8,13 @@ export const langKeyList = [
     "MUST_USE_PHYSICAL_DEVICE",
     "RESET",
     "ARE_YOU_SURE_TO_RESET_APP",
+    "CANCEL",
+    "ABOUT",
+    "APP_DESCRIPTION",
+    "VERSION",
+    "WEBSITE",
+    "PRIVACY_POLICY",
+    "RESET_APP"
 ] as const;
 
 // defines type

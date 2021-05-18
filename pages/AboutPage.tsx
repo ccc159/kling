@@ -4,47 +4,45 @@ import { PageTitle } from '../components/Title';
 import IconSvg from '../assets/svg/icon.svg';
 import { windowWidth } from '../components/styles';
 import { ITask } from '../store/task';
+import { t } from '../i18n';
 
 export const AboutPage = function ({ task }: { task: ITask }) {
   const resetAlert = () =>
     Alert.alert(
-      'Reset',
-      'Are you sure to reset app to factory settings? All stored data will be cleared.',
+      t('RESET'),
+      t('ARE_YOU_SURE_TO_RESET_APP'),
       [
         {
-          text: 'Cancel',
+          text: t('CANCEL'),
           style: 'cancel',
         },
-        { text: 'Reset', onPress: task.ResetApp, style: 'destructive' },
+        { text: t('RESET'), onPress: task.ResetApp, style: 'destructive' },
       ],
       { cancelable: false }
     );
 
   return (
-    <View key='statistics'>
+    <View key='about'>
       <ScrollView>
         <View style={styles.container}>
-          <PageTitle text='About'></PageTitle>
+          <PageTitle text={t('ABOUT')}></PageTitle>
           <IconSvg width={windowWidth / 2} height={windowWidth / 2} />
-          <Text style={[styles.smallText, { marginBottom: 30, padding: 10 }]}>
-            This app is developed to help making batch quick tests easier. It is totally free and open source. It does not access or track any of your
-            personal data. If you find this app helpful, please recommend it to others who might need it. Thanks! ❤️
-          </Text>
-          <Text style={styles.smallText}>version: 1.0.1</Text>
+          <Text style={[styles.smallText, { marginBottom: 30, padding: 10 }]}>{t('APP_DESCRIPTION')}</Text>
+          <Text style={styles.smallText}>{t('VERSION')}: 1.0.1</Text>
           <Text style={styles.smallText}>
-            website:{' '}
+            {t('WEBSITE')}:{' '}
             <Text style={{ color: '#4d8dc3' }} onPress={() => Linking.openURL('https://kling-app.com')}>
               https://kling-app.com
             </Text>
           </Text>
           <Text style={styles.smallText}>
             <Text style={{ color: '#fb8c00' }} onPress={() => Linking.openURL('https://kling-app.com/privacypolicy')}>
-              privacy policy
+              {t('PRIVACY_POLICY')}
             </Text>
           </Text>
           <Text style={styles.smallText}>
             <Text style={{ color: '#eb4034' }} onPress={resetAlert}>
-              reset app
+              {t('RESET_APP')}
             </Text>
           </Text>
         </View>
@@ -65,8 +63,6 @@ const styles = StyleSheet.create({
   smallText: {
     color: 'white',
     fontSize: 13,
-    // width: '100%',
-    // textAlign: 'left',
     marginTop: 8,
     marginBottom: 8,
   },
