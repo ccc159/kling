@@ -57,6 +57,7 @@
       "color": "#202B37"
     },
     "locales": {
+      "zh": "./languages/zh.json",
       "en": "./languages/en.json",
       "de": "./languages/de.json"
     }
