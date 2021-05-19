@@ -32,6 +32,9 @@ export const en: { [key in langKeyType]: string } = {
   NEGATIVE: 'Negative',
   POSITIVE: 'Positive',
   INVALID: 'Invalid',
+  Negative: 'Negative',
+  Positive: 'Positive',
+  Invalid: 'Invalid',
   TESTS: 'Tests',
   TIME_UP: '⏰ Time up!',
   TEST_IS_READY_TO_PROCEED: 'test is ready to proceed',
@@ -59,4 +62,5 @@ export const en: { [key in langKeyType]: string } = {
   INVALID_TEST: 'Invalid test',
   TEST_INVALID_ACCORDING_TO_READ: 'This test is not valid according to the read.',
   RESULT: 'Result',
+  NO_END_DATE: 'No end date',
 };

@@ -245,20 +245,20 @@ const TestResult = ({ test, task }: ITestProps) => {
         description={t('THIS_TEST_IS_NOT_VALID_BECAUSE_EXPIRED')}
       >
         <MyKeyedText textkey={t('NAME')} value={test.tester} />
-        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('LT')} />
       </TitledModal>
       <TitledModal show={showInvalidModal} setShow={setShowInvalidModal} title={t('INVALID_TEST')} description={t('TEST_INVALID_ACCORDING_TO_READ')}>
         <MyKeyedText textkey={t('NAME')} value={test.tester} />
-        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
-        <MyKeyedText textkey={t('ENDED')} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('LT')} />
+        <MyKeyedText textkey={t('ENDED')} value={dayjs(new Date(test.timestamp.end!)).format('LT')} />
       </TitledModal>
       <TitledModal show={showResultModal} setShow={setShowResultModal} title={t('RESULT')}>
         {test.result === Result.Positive && <ResultPositiveSvg width={50} height={50} />}
         {test.result === Result.Negative && <ResultNegativeSvg width={50} height={50} />}
         <MyKeyedText textkey={t('NAME')} value={test.tester} />
-        <MyKeyedText textkey={t('RESULT')} value={test.result!} />
-        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
-        <MyKeyedText textkey={t('ENDED')} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('RESULT')} value={t(test.result! as any)} />
+        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('LT')} />
+        <MyKeyedText textkey={t('ENDED')} value={test.timestamp.end ? dayjs(new Date(test.timestamp.end)).format('LT') : t('NO_END_DATE')} />
       </TitledModal>
       <View style={Styles.circleStyle}>
         <Pressable onPress={onPress}>

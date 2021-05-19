@@ -34,6 +34,9 @@ export const langKeyList = [
     "NEGATIVE",
     "POSITIVE",
     "INVALID",
+    "Negative",
+    "Positive",
+    "Invalid",
     "TESTS",
     "TIME_UP",
     "TEST_IS_READY_TO_PROCEED",
@@ -60,7 +63,8 @@ export const langKeyList = [
     "ENDED",
     "INVALID_TEST",
     "TEST_INVALID_ACCORDING_TO_READ",
-    "RESULT"
+    "RESULT",
+    "NO_END_DATE"
 ] as const;
 
 // defines type

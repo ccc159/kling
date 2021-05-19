@@ -32,6 +32,9 @@ export const zh: { [key in langKeyType]: string } = {
   NEGATIVE: '阴性',
   POSITIVE: '阳性',
   INVALID: '无效',
+  Negative: '阴性',
+  Positive: '阳性',
+  Invalid: '无效',
   TESTS: '测试',
   TIME_UP: '⏰ 时间到!',
   TEST_IS_READY_TO_PROCEED: '测试可进行下一步',
@@ -59,4 +62,5 @@ export const zh: { [key in langKeyType]: string } = {
   INVALID_TEST: '无效测试',
   TEST_INVALID_ACCORDING_TO_READ: '此测试根据读数显示已无效.',
   RESULT: '结果',
+  NO_END_DATE: '无结束日期',
 };

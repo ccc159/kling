@@ -69,7 +69,7 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
           <Text style={styles.currentDay}>{t('TEST_MAP')} </Text>
           <HeatmapChart {...{ tests, activeDay, setActiveDay }} />
           <Text style={styles.currentDay}>
-            {t('TEST_RESULT_ON_DATE')} {activeDay.format('DD.MM')}
+            {t('TEST_RESULT_ON_DATE')} {activeDay.format('L')}
           </Text>
           <MyPercentageChart {...{ tests, activeDay }} />
         </View>
@@ -86,7 +86,7 @@ const TestsPer7Days = function ({ tests }: { tests: ITest[] }) {
   const last7Days = getLast7Days();
   const testCounts = GetTestCountByDays(tests, last7Days);
   const data = last7Days.map((d) => testCounts[d.dayOfYear().toString()]);
-  const last7DaysLabels = last7Days.map((d) => d.format('DD.MM'));
+  const last7DaysLabels = last7Days.map((d) => d.format('MMM D'));
 
   function getLast7Days() {
     const days: Dayjs[] = [];
@@ -151,7 +151,7 @@ const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITes
   const data: { date: string; count: number }[] = [];
 
   for (let i = 0; i < 80; i++) {
-    data.push({ date: last80Days[i].format('YYYY-MM-DD'), count: count[i] });
+    data.push({ date: last80Days[i].format('DD'), count: count[i] });
   }
 
   return (
