@@ -14,6 +14,7 @@ import { SvgWrapper } from './SvgWrapper';
 import * as Notifications from 'expo-notifications';
 import { PHASE1_EXPIRE_MITUTES, PHASE1_READY_MITUTES } from '../config';
 import { MyText } from './MyText';
+import { t } from '../i18n';
 
 interface IAddTestModal {
   task: ITask;
@@ -44,8 +45,8 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
   async function scheduleReadyPushNotification(test: ITest) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: '⏰ Time up!',
-        body: `${test.tester}'s test is ready to proceed.`,
+        title: t('TIME_UP'),
+        body: `${test.tester}: ${t('TEST_IS_READY_TO_PROCEED')}`,
         data: { test, state: 'ready' },
         sound: true,
       },
@@ -56,8 +57,8 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
   async function scheduleExpirePushNotification(test: ITest) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: '⌛ Test expired!',
-        body: `${test.tester}'s test is expired.`,
+        title: t('TEST_EXPIRED'),
+        body: `${test.tester}: ${t('TEST_IS_EXPIRED')}`,
         data: { test, state: 'expired' },
         sound: true,
       },
@@ -68,11 +69,11 @@ export const AddTestModal = ({ task }: IAddTestModal) => {
   return (
     <View style={[Styles.circleStyle]}>
       <MyModal visible={modalVisible} setVisible={setModalVisible}>
-        <MyTitle text={'Name of the test person?'} />
+        <MyTitle text={t('NAME_OF_THE_TEST_PERSON')} />
         <SvgWrapper Svg={Phase1Start} />
-        <MyText style={{ marginBottom: 5 }}>Make sure the swab is put into the bottom of the extraction tube.</MyText>
-        <MyTextInput value={tester} placeholder={'name'} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
-        <MyButton disabled={tester === ''} title={'OK'} onPress={addTest} />
+        <MyText style={{ marginBottom: 5 }}>{t('MAKE_SURE_TO_PUT_INTO_TUBE')}</MyText>
+        <MyTextInput value={tester} placeholder={t('NAME')} onChangeText={(v) => (v ? setTester(v) : setTester(''))} />
+        <MyButton disabled={tester === ''} title={t('OK')} onPress={addTest} />
       </MyModal>
 
       <Pressable onPress={showModal}>

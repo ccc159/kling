@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { t } from '../i18n';
 import { MyButton } from './Button';
 import { MyModal } from './MyModal';
 import { MyTitle } from './Title';
@@ -24,7 +25,7 @@ export const TitledModal = ({ show, setShow, title, description, children }: ITi
         <Text style={{ marginBottom: 5 }}>{description}</Text>
         {children}
       </View>
-      <MyButton title={'Close'} onPress={closeModal} />
+      <MyButton title={t('CLOSE')} onPress={closeModal} />
     </MyModal>
   );
 };

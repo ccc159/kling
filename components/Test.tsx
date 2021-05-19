@@ -28,6 +28,7 @@ import { usePulse } from '../hooks/usePulse';
 import * as Notifications from 'expo-notifications';
 import { PHASE1_EXPIRE_MITUTES, PHASE1_READY_MITUTES, PHASE2_EXPIRE_MITUTES, PHASE2_READY_MITUTES } from '../config';
 import { PlayExpired, PlayNegative, PlayPositive } from './Sounds';
+import { t } from '../i18n';
 
 interface ITestProps {
   test: ITest;
@@ -92,8 +93,8 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   async function scheduleReadyPushNotification(test: ITest) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: '⏰ Time up!',
-        body: `${test.tester}'s test is ready to see the result.`,
+        title: t('TIME_UP'),
+        body: `${test.tester}: ${t('TEST_IS_READY_TO_PROCEED')}`,
         data: { test, state: 'ready' },
         sound: true,
       },
@@ -104,8 +105,8 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   async function scheduleExpirePushNotification(test: ITest) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: '⌛ Test expired!',
-        body: `${test.tester}'s test is expired.`,
+        title: t('TEST_EXPIRED'),
+        body: `${test.tester}: ${t('TEST_IS_EXPIRED')}`,
         data: { test, state: 'expired' },
         sound: true,
       },
@@ -116,10 +117,10 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   return (
     <View style={Styles.circleStyle}>
       <MyModal visible={showNextPhaseModal} setVisible={setShowNextPhaseModal}>
-        <MyTitle text={'Ready to make drops'} />
-        <MyText>Turn the tube upside down and lightly squeeze 4 drops onto the specimen well.</MyText>
+        <MyTitle text={t('READY_TO_MAKE_DROPS')} />
+        <MyText>{t('SQUEEZE_4_DROPS_ON_WELL')}</MyText>
         <SvgWrapper Svg={Phase2StartSvg} />
-        <MyButton title={'Done'} onPress={startNextPhase} />
+        <MyButton title={t('DONE')} onPress={startNextPhase} />
       </MyModal>
       <InProgressModal
         tester={test.tester}
@@ -186,19 +187,19 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
   return (
     <View style={Styles.circleStyle}>
       <MyModal visible={showFillResultModal} setVisible={setShowFillResultModal}>
-        <MyTitle text={'Fill result'} />
-        <MyText>What's the result?</MyText>
+        <MyTitle text={t('FILL_RESULT')} />
+        <MyText>{t('WAHT_IS_RESULT')}</MyText>
         <SvgWrapper Svg={ResultFillSvg} />
         <View style={{ marginBottom: 10 }}>
           <RadioGroup
-            radioButtons={Object.keys(Result).map((v) => ({ id: v, value: v, label: v, selected: v === result }))}
+            radioButtons={Object.keys(Result).map((v) => ({ id: v, value: v, label: t(v as any), selected: v === result }))}
             onPress={(r) => {
               const selected = r.find((i) => i.selected);
               if (selected) setResult(selected.value as Result);
             }}
           />
         </View>
-        <MyButton disabled={result === null} title={'Confirm'} onPress={fillResult} />
+        <MyButton disabled={result === null} title={t('CONFIRM')} onPress={fillResult} />
       </MyModal>
       <InProgressModal
         tester={test.tester}
@@ -240,29 +241,24 @@ const TestResult = ({ test, task }: ITestProps) => {
       <TitledModal
         show={showExpiredModal}
         setShow={setShowExpiredModal}
-        title={'Expired Test'}
-        description={"This test is not valid because it's expired."}
+        title={t('EXPIRED_TEST')}
+        description={t('THIS_TEST_IS_NOT_VALID_BECAUSE_EXPIRED')}
       >
-        <MyKeyedText textkey={'Name'} value={test.tester} />
-        <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('NAME')} value={test.tester} />
+        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
       </TitledModal>
-      <TitledModal
-        show={showInvalidModal}
-        setShow={setShowInvalidModal}
-        title={'Invalid Test'}
-        description={'This test is not valid according to the read.'}
-      >
-        <MyKeyedText textkey={'Name'} value={test.tester} />
-        <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
-        <MyKeyedText textkey={'Ended'} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
+      <TitledModal show={showInvalidModal} setShow={setShowInvalidModal} title={t('INVALID_TEST')} description={t('TEST_INVALID_ACCORDING_TO_READ')}>
+        <MyKeyedText textkey={t('NAME')} value={test.tester} />
+        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('ENDED')} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
       </TitledModal>
-      <TitledModal show={showResultModal} setShow={setShowResultModal} title={'Result'}>
+      <TitledModal show={showResultModal} setShow={setShowResultModal} title={t('RESULT')}>
         {test.result === Result.Positive && <ResultPositiveSvg width={50} height={50} />}
         {test.result === Result.Negative && <ResultNegativeSvg width={50} height={50} />}
-        <MyKeyedText textkey={'Name'} value={test.tester} />
-        <MyKeyedText textkey={'Result'} value={test.result!} />
-        <MyKeyedText textkey={'Started'} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
-        <MyKeyedText textkey={'Ended'} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('NAME')} value={test.tester} />
+        <MyKeyedText textkey={t('RESULT')} value={test.result!} />
+        <MyKeyedText textkey={t('STARTED')} value={dayjs(new Date(test.timestamp.start!)).format('HH:mm')} />
+        <MyKeyedText textkey={t('ENDED')} value={dayjs(new Date(test.timestamp.end!)).format('HH:mm')} />
       </TitledModal>
       <View style={Styles.circleStyle}>
         <Pressable onPress={onPress}>

@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { CounterToShow } from './helper';
 import { CircleSize } from './styles';

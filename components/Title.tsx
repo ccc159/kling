@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, Pressable, View, Modal } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
 
 type ITitle = {
   text: string;

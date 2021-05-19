@@ -7,6 +7,7 @@ import { Test } from '../components/Test';
 import { IState, ITest } from '../types';
 import { ITask } from '../store/task';
 import { PageTitle } from '../components/Title';
+import { t } from '../i18n';
 
 const numColumns = 3;
 
@@ -46,7 +47,7 @@ export const TestPage = function ({ state, task }: ITestPageProps) {
     <View key='test'>
       <ScrollView>
         <View style={styles.container}>
-          <PageTitle text='Tests'></PageTitle>
+          <PageTitle text={t('TESTS')}></PageTitle>
           {fillTestsTo3Times(tests).map((test, index) => (
             <ListItem test={test} key={index} />
           ))}
