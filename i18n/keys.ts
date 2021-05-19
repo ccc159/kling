@@ -14,7 +14,26 @@ export const langKeyList = [
     "VERSION",
     "WEBSITE",
     "PRIVACY_POLICY",
-    "RESET_APP"
+    "RESET_APP",
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+    "STATISTICS",
+    "TEST_MAP",
+    "TEST_RESULT_ON_DATE",
+    "TEST",
+    "NEGATIVE",
+    "POSITIVE",
+    "INVALID"
 ] as const;
 
 // defines type

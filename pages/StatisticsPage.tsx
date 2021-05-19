@@ -9,6 +9,7 @@ import { windowWidth } from '../components/styles';
 import { PageTitle } from '../components/Title';
 import dayjs, { Dayjs } from 'dayjs';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { t } from '../i18n';
 
 interface IStatisticsPageProps {
   state: IState;
@@ -20,7 +21,7 @@ interface RenderItemProps {
   index: number;
 }
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Otc', 'Nov', 'Dec'];
+const months = [t('JAN'), t('FEB'), t('MAR'), t('APR'), t('MAY'), t('JUN'), t('JUL'), t('AUG'), t('SEP'), t('OCT'), t('NOV'), t('DEC')];
 
 export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
   const tests = state.tests;
@@ -40,7 +41,7 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
     <View key='statistics'>
       <ScrollView>
         <View style={styles.container}>
-          <PageTitle text='Statistics'></PageTitle>
+          <PageTitle text={t('STATISTICS')}></PageTitle>
           <Carousel
             layout={'default'}
             ref={ref}
@@ -65,9 +66,11 @@ export const StatisticsPage = function ({ state, task }: IStatisticsPageProps) {
             inactiveDotOpacity={0.4}
             inactiveDotScale={0.6}
           />
-          <Text style={styles.currentDay}>{'Testmap (click to select date)'} </Text>
+          <Text style={styles.currentDay}>{t('TEST_MAP')} </Text>
           <HeatmapChart {...{ tests, activeDay, setActiveDay }} />
-          <Text style={styles.currentDay}>Test result on date {activeDay.format('DD.MM')}</Text>
+          <Text style={styles.currentDay}>
+            {t('TEST_RESULT_ON_DATE')} {activeDay.format('DD.MM')}
+          </Text>
           <MyPercentageChart {...{ tests, activeDay }} />
         </View>
       </ScrollView>
@@ -104,7 +107,7 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
       data={{ labels, datasets }}
       width={windowWidth - 40} // from react-native
       height={200}
-      yAxisLabel={'Test: '}
+      yAxisLabel={`${t('TEST')}: `}
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
         backgroundColor: '#e26a00',
@@ -189,7 +192,7 @@ const MyPercentageChart = function ({ tests, activeDay }: { tests: ITest[]; acti
   }
 
   const data = {
-    labels: ['Negative', 'Positive', 'Invalid'],
+    labels: [t('NEGATIVE'), t('POSITIVE'), t('INVALID')],
     datasets: [{ data: counts }],
   };
 
@@ -199,7 +202,7 @@ const MyPercentageChart = function ({ tests, activeDay }: { tests: ITest[]; acti
       data={data}
       width={windowWidth - 40}
       height={200}
-      yAxisLabel='Test: '
+      yAxisLabel={`${t('TEST')}: `}
       yAxisSuffix=''
       yAxisInterval={1}
       showValuesOnTopOfBars
