@@ -27,7 +27,7 @@ export const AboutPage = function ({ task }: { task: ITask }) {
         <View style={styles.container}>
           <PageTitle text={t('ABOUT')}></PageTitle>
           <IconSvg width={windowWidth / 2} height={windowWidth / 2} />
-          <Text style={styles.smallText}>{t('VERSION')}: 1.0.1</Text>
+          <Text style={styles.smallText}>{t('VERSION')}: 1.0.2</Text>
           <Text style={styles.smallText}>
             {t('WEBSITE')}:{' '}
             <Text style={{ color: '#4d8dc3' }} onPress={() => Linking.openURL('https://kling-app.com')}>
