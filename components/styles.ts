@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 
-const size = Math.min(windowWidth / 4, windowHeight / 4);
+const size = (Math.min(windowWidth, windowHeight) - 95) / 3;
 export const CircleSize = size - (size % 2) - 2;
 export const SmallCircleSize = CircleSize - 4;
 
