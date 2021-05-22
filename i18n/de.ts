@@ -28,6 +28,7 @@ export const de: { [key in langKeyType]: string } = {
   TEST_MAP: 'Countdownmap (Datum durch Anklicken auswählen)',
   TEST_RESULT_ON_DATE: 'Countdown-Ergebnis am Datum',
   TEST: 'Countdown',
+  TEST_SHORT: 'T',
   NEGATIVE: 'Bestanden',
   POSITIVE: 'Gescheitert',
   INVALID: 'Ungültig',

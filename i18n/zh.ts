@@ -27,6 +27,7 @@ export const zh: { [key in langKeyType]: string } = {
   TEST_MAP: '计时热度 (可点选日期)',
   TEST_RESULT_ON_DATE: '在此日期计时结果',
   TEST: '计时',
+  TEST_SHORT: 'T',
   NEGATIVE: '通过',
   POSITIVE: '未通过',
   INVALID: '无效',

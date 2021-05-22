@@ -30,6 +30,7 @@ export const langKeyList = [
     "TEST_MAP",
     "TEST_RESULT_ON_DATE",
     "TEST",
+    "TEST_SHORT",
     "NEGATIVE",
     "POSITIVE",
     "INVALID",

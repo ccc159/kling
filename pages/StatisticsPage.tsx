@@ -107,7 +107,7 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
       data={{ labels, datasets }}
       width={windowWidth - 40} // from react-native
       height={200}
-      yAxisLabel={`${t('TEST')}: `}
+      yAxisLabel={`${t('TEST_SHORT')}: `}
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
         backgroundColor: '#e26a00',
@@ -133,26 +133,28 @@ const MyLineChart = function ({ labels, datasets }: { labels: string[]; datasets
 };
 
 const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITest[]; activeDay: Dayjs; setActiveDay: (n: Dayjs) => void }) {
-  function getLast80Days() {
+  function getLast95Days() {
     const days: Dayjs[] = [];
     const today = dayjs();
     days.unshift(today);
-    for (let i = 1; i < 80; i++) {
+    for (let i = 1; i < 95; i++) {
       days.unshift(today.subtract(i, 'd'));
     }
     return days;
   }
 
-  const last80Days = getLast80Days();
+  const last95Days = getLast95Days();
 
-  const testCounts = GetTestCountByDays(tests, last80Days);
-  const count = last80Days.map((d) => testCounts[d.dayOfYear().toString()]);
+  const testCounts = GetTestCountByDays(tests, last95Days);
+  const count = last95Days.map((d) => testCounts[d.dayOfYear().toString()]);
 
   const data: { date: string; count: number }[] = [];
 
-  for (let i = 0; i < 80; i++) {
-    data.push({ date: last80Days[i].format('DD'), count: count[i] });
+  for (let i = 0; i < 95; i++) {
+    data.push({ date: last95Days[i].toString(), count: count[i] });
   }
+
+  console.log(data)
 
   return (
     <ContributionGraph
@@ -160,7 +162,7 @@ const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITes
       tooltipDataAttrs={(v) => ({})}
       values={data}
       endDate={new Date()}
-      numDays={80}
+      numDays={95}
       width={windowWidth - 40}
       height={220}
       chartConfig={{
@@ -202,7 +204,7 @@ const MyPercentageChart = function ({ tests, activeDay }: { tests: ITest[]; acti
       data={data}
       width={windowWidth - 40}
       height={200}
-      yAxisLabel={`${t('TEST')}: `}
+      yAxisLabel={`${t('TEST_SHORT')}: `}
       yAxisSuffix=''
       yAxisInterval={1}
       showValuesOnTopOfBars
