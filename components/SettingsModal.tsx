@@ -64,10 +64,10 @@ export const SettingsModal = ({ task, config }: ISettingsModal) => {
           onChangeText={(v) => setNumber(v, (val) => setEditConfig({ ...editConfig, PHASE2_READY_MINUTES: val }))}
         />
 
-        <MyText>{t('PHASE2_READY_MINUTES')}</MyText>
+        <MyText>{t('PHASE2_EXPIRE_MINUTES')}</MyText>
         <MyTextInput
-          value={editConfig.PHASE2_READY_MINUTES.toString()}
-          onChangeText={(v) => setNumber(v, (val) => setEditConfig({ ...editConfig, PHASE2_READY_MINUTES: val }))}
+          value={editConfig.PHASE2_EXPIRE_MINUTES.toString()}
+          onChangeText={(v) => setNumber(v, (val) => setEditConfig({ ...editConfig, PHASE2_EXPIRE_MINUTES: val }))}
         />
 
         <MyButton disabled={editConfig === config} title={t('OK')} onPress={updateConfig} />
