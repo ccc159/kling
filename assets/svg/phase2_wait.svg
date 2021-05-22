@@ -11,11 +11,11 @@
    height="34.65184mm"
    viewBox="0 0 34.15884 34.65184"
    version="1.1"
-   id="svg2900"
-   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="phase2_wait.svg">
+   id="svg8"
+   sodipodi:docname="phase2_wait.svg"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)">
   <defs
-     id="defs2894" />
+     id="defs2" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -23,20 +23,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-457.76071"
-     inkscape:cy="70.749656"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="154.27795"
+     inkscape:cy="142.31791"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1267"
      inkscape:window-height="1040"
-     inkscape:window-x="638"
-     inkscape:window-y="155"
+     inkscape:window-x="1105"
+     inkscape:window-y="87"
      inkscape:window-maximized="0" />
   <metadata
-     id="metadata2897">
+     id="metadata5">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -51,46 +51,51 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-226.94919,-129.44749)">
-    <path
-       stroke="#3714e7"
-       stroke-width="0.0201618"
-       d="m 226.95927,146.77341 c 0,-9.56319 7.64213,-17.31584 17.06928,-17.31584 9.42715,0 17.0694,7.75265 17.0694,17.31584 0,9.56332 -7.64225,17.31584 -17.0694,17.31584 -9.42715,0 -17.06928,-7.75252 -17.06928,-17.31584 z"
-       fill="#396367"
-       stroke-linecap="round"
-       opacity="1"
-       stroke-linejoin="round"
-       id="path880"
-       style="clip-rule:evenodd;fill:#675a4f;fill-opacity:1;fill-rule:evenodd;stroke:#a69e9e;stroke-opacity:1" />
-    <path
-       stroke="#a69e9e"
-       stroke-width="2.18246"
-       d="m 234.34925,147.67468 c -0.38201,-5.57763 3.72405,-10.40166 9.17112,-10.77463 5.44696,-0.37308 10.17233,3.84611 10.55423,9.42384 0.38201,5.57763 -3.72395,10.40156 -9.17101,10.77463 -5.44697,0.37308 -10.17234,-3.84621 -10.55434,-9.42384 z"
-       fill="#ffffff"
-       stroke-linecap="butt"
-       opacity="1"
-       stroke-linejoin="round"
-       id="path882"
-       style="clip-rule:evenodd;fill-rule:evenodd" />
-    <path
-       stroke="#a69e9e"
-       stroke-width="2.18246"
-       d="m 243.91088,147.59154 0.10483,-6.25935"
-       fill="none"
-       stroke-linecap="round"
-       opacity="1"
-       stroke-linejoin="round"
-       id="path884"
-       style="clip-rule:evenodd;fill-rule:evenodd" />
-    <path
-       stroke="#a69e9e"
-       stroke-width="2.18246"
-       d="m 243.83731,147.58186 5.89616,2.10354"
-       fill="none"
-       stroke-linecap="round"
-       opacity="1"
-       stroke-linejoin="round"
-       id="path886"
-       style="clip-rule:evenodd;fill-rule:evenodd" />
+     transform="translate(47.317521,-11.400269)">
+    <g
+       inkscape:label="Layer 1"
+       id="layer1-5"
+       transform="translate(-274.26671,-118.04722)">
+      <path
+         stroke="#3714e7"
+         stroke-width="0.0201618"
+         d="m 226.95927,146.77341 c 0,-9.56319 7.64213,-17.31584 17.06928,-17.31584 9.42715,0 17.0694,7.75265 17.0694,17.31584 0,9.56332 -7.64225,17.31584 -17.0694,17.31584 -9.42715,0 -17.06928,-7.75252 -17.06928,-17.31584 z"
+         fill="#396367"
+         stroke-linecap="round"
+         opacity="1"
+         stroke-linejoin="round"
+         id="path880"
+         style="clip-rule:evenodd;fill:#675a4f;fill-opacity:1;fill-rule:evenodd;stroke:#a69e9e;stroke-opacity:1" />
+      <path
+         stroke="#a69e9e"
+         stroke-width="2.18246"
+         d="m 234.34925,147.67468 c -0.38201,-5.57763 3.72405,-10.40166 9.17112,-10.77463 5.44696,-0.37308 10.17233,3.84611 10.55423,9.42384 0.38201,5.57763 -3.72395,10.40156 -9.17101,10.77463 -5.44697,0.37308 -10.17234,-3.84621 -10.55434,-9.42384 z"
+         fill="#ffffff"
+         stroke-linecap="butt"
+         opacity="1"
+         stroke-linejoin="round"
+         id="path882"
+         style="clip-rule:evenodd;fill-rule:evenodd" />
+      <path
+         stroke="#a69e9e"
+         stroke-width="2.18246"
+         d="m 243.91088,147.59154 0.10483,-6.25935"
+         fill="none"
+         stroke-linecap="round"
+         opacity="1"
+         stroke-linejoin="round"
+         id="path884"
+         style="clip-rule:evenodd;fill-rule:evenodd" />
+      <path
+         stroke="#a69e9e"
+         stroke-width="2.18246"
+         d="m 243.83731,147.58186 5.89616,2.10354"
+         fill="none"
+         stroke-linecap="round"
+         opacity="1"
+         stroke-linejoin="round"
+         id="path886"
+         style="clip-rule:evenodd;fill-rule:evenodd" />
+    </g>
   </g>
 </svg>

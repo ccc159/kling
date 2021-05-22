@@ -11,11 +11,11 @@
    height="34.662781mm"
    viewBox="0 0 34.16991 34.662781"
    version="1.1"
-   id="svg2900"
-   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="phase1_wait.svg">
+   id="svg8"
+   sodipodi:docname="phase1_wait.svg"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)">
   <defs
-     id="defs2894" />
+     id="defs2" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -23,20 +23,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-787.47335"
-     inkscape:cy="-246.60302"
+     inkscape:zoom="1.4"
+     inkscape:cx="-54.110066"
+     inkscape:cy="8.8369273"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1267"
      inkscape:window-height="1040"
-     inkscape:window-x="638"
-     inkscape:window-y="155"
+     inkscape:window-x="537"
+     inkscape:window-y="67"
      inkscape:window-maximized="0" />
   <metadata
-     id="metadata2897">
+     id="metadata5">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -51,11 +51,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-314.18566,-213.41372)">
+     transform="translate(40.080951,-24.270339)">
     <path
        stroke="#3714e7"
        stroke-width="0.0201618"
-       d="m 314.19574,230.74517 c 0,-9.56634 7.64465,-17.32137 17.07481,-17.32137 9.4303,0 17.07494,7.75503 17.07494,17.32137 0,9.56634 -7.64464,17.32125 -17.07494,17.32125 -9.43016,0 -17.07481,-7.75491 -17.07481,-17.32125 z"
+       d="m -40.07087,41.60179 c 0,-9.56634 7.64465,-17.32137 17.07481,-17.32137 9.4303,0 17.07494,7.75503 17.07494,17.32137 0,9.56634 -7.64464,17.32125 -17.07494,17.32125 -9.43016,0 -17.07481,-7.75491 -17.07481,-17.32125 z"
        fill="#396367"
        stroke-linecap="round"
        opacity="1"
@@ -65,42 +65,42 @@
     <path
        stroke="#ededed"
        stroke-width="1.59775"
-       d="m 325.98928,238.06168 10.24789,0.15987"
+       d="m -29.547156,48.92874 12.802095,0.14943"
        fill="none"
        stroke-linecap="round"
        opacity="1"
        stroke-linejoin="round"
        id="path980"
-       style="clip-rule:evenodd;fill-rule:evenodd;stroke-width:1.96614;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke:#a69e9e;stroke-width:2.12458;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        stroke="#ededed"
        stroke-width="1.59775"
-       d="m 325.98175,225.52444 -0.1601,12.30887"
+       d="m -29.556563,37.210191 -0.200003,11.505091"
        fill="none"
        stroke-linecap="round"
        opacity="1"
        stroke-linejoin="round"
        id="path982"
-       style="clip-rule:evenodd;fill-rule:evenodd;stroke-width:1.96614;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke:#a69e9e;stroke-width:2.12458;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        stroke="#ededed"
        stroke-width="1.5386"
-       d="m 336.34641,225.69382 -0.16009,12.45828"
+       d="m -16.608594,37.36851 -0.199991,11.644745"
        fill="none"
        stroke-linecap="round"
        opacity="1"
        stroke-linejoin="round"
        id="path984"
-       style="clip-rule:evenodd;fill-rule:evenodd;stroke-width:1.96614;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke:#a69e9e;stroke-width:2.12458;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        stroke="#ededed"
        stroke-width="1.5386"
-       d="m 335.54254,220.74651 -6.85686,15.24002"
+       d="m -16.951364,32.271793 -8.565878,14.244835"
        fill="none"
        stroke-linecap="round"
        opacity="1"
        stroke-linejoin="round"
        id="path986"
-       style="clip-rule:evenodd;fill-rule:evenodd;stroke-width:1.99213;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="clip-rule:evenodd;fill-rule:evenodd;stroke:#ffffff;stroke-width:2.15267;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
