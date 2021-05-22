@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, StatusBar as TopBar, Platform, AppState, Vibration } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar as TopBar, AppState, Vibration } from 'react-native';
 import { AppContext } from './store';
 import PagerView from 'react-native-pager-view';
-import { ITest } from './types';
+import { IConfig, ITest } from './types';
 import { TestPage } from './pages/TestPage';
 import { StatisticsPage } from './pages/StatisticsPage';
 import { AboutPage } from './pages/AboutPage';
@@ -13,6 +13,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { PlayExpired, PlayReady } from './components/Sounds';
 import { FakeTestsData } from './components/helper';
+import { defaultConfig } from './store/state';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
@@ -43,9 +44,14 @@ export const Dashboard = function () {
   async function loadLocalData() {
     setIsReady(false);
     const jsonValue = await AsyncStorage.getItem('tests');
-    const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
-    // const tests = FakeTestsData();
-    task.LoadData(tests);
+    // const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
+    const tests = FakeTestsData();
+
+    const configValue = await AsyncStorage.getItem('config');
+    const config = configValue !== null ? (JSON.parse(configValue) as IConfig) : defaultConfig;
+
+    task.LoadData(tests, config);
+
     setIsReady(true);
   }
 

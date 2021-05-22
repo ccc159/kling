@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, View, Animated, Text } from 'react-native';
 import { useInterval } from '../hooks/useInterval';
 import { ITask } from '../store/task';
-import { ITest, Result } from '../types';
+import { IConfig, ITest, Result } from '../types';
 import { MyButton } from './Button';
 import { IsTimeUp } from './helper';
 import { InProgressModal } from './InProgressModal';
@@ -26,25 +26,25 @@ import { MyKeyedText, MyText } from './MyText';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { usePulse } from '../hooks/usePulse';
 import * as Notifications from 'expo-notifications';
-import { PHASE1_EXPIRE_MITUTES, PHASE1_READY_MITUTES, PHASE2_EXPIRE_MITUTES, PHASE2_READY_MITUTES } from '../config';
 import { PlayExpired, PlayNegative, PlayPositive } from './Sounds';
 import { t } from '../i18n';
 
 interface ITestProps {
+  config: IConfig;
   test: ITest;
   task: ITask;
 }
 
-export const Test = ({ test, task }: ITestProps) => {
+export const Test = ({ test, task, config }: ITestProps) => {
   const [seed, setSeed] = useState<number>(0);
 
   useInterval(() => setSeed(seed + 1), 1000);
 
   let content: JSX.Element = <View></View>;
 
-  if (test.result) content = <TestResult {...{ task, test }} />;
-  else if (!test.timestamp.intermediate) content = <TestPhase1 {...{ task, test }} />;
-  else if (!test.timestamp.end) content = <TestPhase2 {...{ task, test }} />;
+  if (test.result) content = <TestResult {...{ task, test, config }} />;
+  else if (!test.timestamp.intermediate) content = <TestPhase1 {...{ task, test, config }} />;
+  else if (!test.timestamp.end) content = <TestPhase2 {...{ task, test, config }} />;
 
   return (
     <View>
@@ -56,15 +56,15 @@ export const Test = ({ test, task }: ITestProps) => {
   );
 };
 
-const TestPhase1 = ({ test, task }: ITestProps) => {
+const TestPhase1 = ({ test, task, config }: ITestProps) => {
   const fromDate = new Date(test.timestamp.start!);
   const [showNextPhaseModal, setShowNextPhaseModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
 
   const scale = usePulse();
 
-  const isReady = IsTimeUp(PHASE1_READY_MITUTES, fromDate);
-  const isExpired = IsTimeUp(PHASE1_EXPIRE_MITUTES, fromDate);
+  const isReady = IsTimeUp(config.PHASE1_READY_MITUTES, fromDate);
+  const isExpired = IsTimeUp(config.PHASE1_EXPIRE_MITUTES, fromDate);
 
   useEffect(() => {
     if (!isExpired) return;
@@ -98,7 +98,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
         data: { test, state: 'ready' },
         sound: true,
       },
-      trigger: { seconds: PHASE2_READY_MITUTES * 60 },
+      trigger: { seconds: config.PHASE2_READY_MITUTES * 60 },
     });
   }
 
@@ -110,7 +110,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
         data: { test, state: 'expired' },
         sound: true,
       },
-      trigger: { seconds: PHASE2_EXPIRE_MITUTES * 60 },
+      trigger: { seconds: config.PHASE2_EXPIRE_MITUTES * 60 },
     });
   }
 
@@ -126,10 +126,10 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
         tester={test.tester}
         show={showProgressModal}
         setShow={setShowProgressModal}
-        countDownMinutes={PHASE1_READY_MITUTES}
+        countDownMinutes={config.PHASE1_READY_MITUTES}
         from={fromDate}
       />
-      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={PHASE1_READY_MITUTES} from={fromDate} />}
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={config.PHASE1_READY_MITUTES} from={fromDate} />}
       <Pressable onPress={onPress}>
         {isReady ? (
           <Animated.View style={{ transform: [{ scale }] }}>
@@ -143,7 +143,7 @@ const TestPhase1 = ({ test, task }: ITestProps) => {
   );
 };
 
-const TestPhase2 = ({ test, task }: ITestProps) => {
+const TestPhase2 = ({ test, task, config }: ITestProps) => {
   const fromDate = new Date(test.timestamp.intermediate!);
   const [showFillResultModal, setShowFillResultModal] = useState<boolean>(false);
   const [showProgressModal, setShowProgressModal] = useState<boolean>(false);
@@ -151,8 +151,8 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
 
   const scale = usePulse();
 
-  const isReady = IsTimeUp(PHASE2_READY_MITUTES, fromDate);
-  const isExpired = IsTimeUp(PHASE2_EXPIRE_MITUTES, fromDate);
+  const isReady = IsTimeUp(config.PHASE2_READY_MITUTES, fromDate);
+  const isExpired = IsTimeUp(config.PHASE2_EXPIRE_MITUTES, fromDate);
 
   useEffect(() => {
     if (!isExpired) return;
@@ -205,10 +205,10 @@ const TestPhase2 = ({ test, task }: ITestProps) => {
         tester={test.tester}
         show={showProgressModal}
         setShow={setShowProgressModal}
-        countDownMinutes={PHASE2_READY_MITUTES}
+        countDownMinutes={config.PHASE2_READY_MITUTES}
         from={fromDate}
       />
-      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={PHASE2_READY_MITUTES} from={fromDate} />}
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={config.PHASE2_READY_MITUTES} from={fromDate} />}
       <Pressable onPress={onPress}>
         {isReady ? (
           <Animated.View style={{ transform: [{ scale }] }}>

@@ -31,8 +31,16 @@ export interface ITest {
   report?: IReport;
 }
 
+export interface IConfig {
+  PHASE1_READY_MITUTES: number;
+  PHASE1_EXPIRE_MITUTES: number;
+  PHASE2_READY_MITUTES: number;
+  PHASE2_EXPIRE_MITUTES: number;
+}
+
 export interface IState {
   tests: ITest[];
+  config: IConfig;
 }
 
 export interface IDispatch {

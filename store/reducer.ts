@@ -6,7 +6,7 @@ export const reducer: React.Reducer<IState, IAction> = (state: IState = initialS
   const { type, payload } = action;
 
   if (type === 'LOAD_DATA') {
-    return { ...state, tests: payload };
+    return { ...state, tests: payload.tests, config: payload.config };
   } else if (type === 'ADD_TEST') {
     const newTests = [...state.tests, payload];
     const jsonValue = JSON.stringify(newTests);

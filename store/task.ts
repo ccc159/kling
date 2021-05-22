@@ -1,15 +1,15 @@
-import { IDispatch, IState, ITest } from '../types';
+import { IConfig, IDispatch, IState, ITest } from '../types';
 
 export interface ITask {
-  LoadData: (tests: ITest[]) => void;
+  LoadData: (tests: ITest[], config: IConfig) => void;
   AddTest: (test: ITest) => void;
   UpdateTest: (test: ITest) => void;
   ResetApp: () => void;
 }
 
 export function useTask(state: IState, dispatch: IDispatch): ITask {
-  const LoadData = (tests: ITest[]) => {
-    dispatch({ type: 'LOAD_DATA', payload: tests });
+  const LoadData = (tests: ITest[], config: IConfig) => {
+    dispatch({ type: 'LOAD_DATA', payload: { tests, config } });
   };
   const AddTest = (test: ITest) => {
     dispatch({ type: 'ADD_TEST', payload: test });

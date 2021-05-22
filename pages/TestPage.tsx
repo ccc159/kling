@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { AddTestModal } from '../components/AddTestModal';
 import { CreateAddTestPlaceHolder, CreateDummyTest, IsTestAddPlaceHolder, IsTestDummy, IsTestToday } from '../components/helper';
 import { Styles } from '../components/styles';
@@ -19,16 +19,17 @@ interface ITestPageProps {
 export const TestPage = function ({ state, task }: ITestPageProps) {
   // filter only tests for today
   const tests = state.tests.filter((t) => IsTestToday(t));
+  const config = state.config;
 
   const ListItem = ({ test }: { test: ITest }) => {
     if (IsTestAddPlaceHolder(test)) {
-      return <AddTestModal {...{ task }} />;
+      return <AddTestModal {...{ task, config }} />;
     }
 
     if (IsTestDummy(test)) {
       return <View style={[Styles.circleStyle, styles.itemInvisible]} />;
     }
-    return <Test {...{ test, task }} />;
+    return <Test {...{ test, task, config }} />;
   };
 
   const fillTestsTo3Times = (tests: ITest[]) => {
