@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { PageTitle } from '../components/Title';
 import IconSvg from '../assets/svg/icon.svg';
@@ -29,7 +29,7 @@ export const AboutPage = function ({ task, state }: { task: ITask; state: IState
         <View style={styles.container}>
           <PageTitle text={t('ABOUT')}></PageTitle>
           <IconSvg width={windowWidth / 2} height={windowWidth / 2} />
-          <Text style={styles.smallText}>{t('VERSION')}: 1.0.2</Text>
+          <Text style={styles.smallText}>{t('VERSION')}: 1.0.3</Text>
           <Text style={styles.smallText}>
             {t('WEBSITE')}:{' '}
             <Text style={{ color: '#4d8dc3' }} onPress={() => Linking.openURL('https://kling-app.com')}>

@@ -14,6 +14,7 @@ import * as Notifications from 'expo-notifications';
 import { PlayExpired, PlayReady } from './components/Sounds';
 import { FakeTestsData } from './components/helper';
 import { defaultConfig } from './store/state';
+import { t } from './i18n';
 
 export const Dashboard = function () {
   const { state, task } = AppContext();
@@ -44,8 +45,8 @@ export const Dashboard = function () {
   async function loadLocalData() {
     setIsReady(false);
     const jsonValue = await AsyncStorage.getItem('tests');
-    // const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
-    const tests = FakeTestsData();
+    const tests = jsonValue !== null ? (JSON.parse(jsonValue) as ITest[]) : [];
+    // const tests = FakeTestsData();
 
     const configValue = await AsyncStorage.getItem('config');
     const config = configValue !== null ? (JSON.parse(configValue) as IConfig) : defaultConfig;
@@ -130,13 +131,13 @@ async function registerForPushNotificationsAsync() {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+      alert(t('FAILED_TO_PUSH_TOKEN'));
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
-    alert('Must use physical device for Push Notifications');
+    alert(t('MUST_USE_PHYSICAL_DEVICE'));
   }
 
   return token;
