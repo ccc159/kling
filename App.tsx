@@ -18,7 +18,8 @@ import 'dayjs/locale/zh';
 i18n.translations = { en, de, zh };
 
 let locale = Localization.locale;
-if (locale === 'zh-Hans' || locale === 'zh-Hans-CN') locale = 'zh';
+
+if (locale.includes('zh-Hans')) locale = 'zh';
 else if (locale === 'de-DE' || locale === 'de-CH') locale = 'de';
 
 locale = ['en', 'de', 'zh'].includes(locale) ? locale : 'en';
