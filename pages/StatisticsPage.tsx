@@ -154,8 +154,6 @@ const HeatmapChart = function ({ tests, activeDay, setActiveDay }: { tests: ITes
     data.push({ date: last95Days[i].toString(), count: count[i] });
   }
 
-  console.log(data)
-
   return (
     <ContributionGraph
       onDayPress={({ count, date }) => setActiveDay(dayjs(date))}
