@@ -62,4 +62,9 @@ export const de: { [key in langKeyType]: string } = {
   TEST_INVALID_ACCORDING_TO_READ: 'Dieser Countdown ist nach dem Lesen nicht gültig.',
   RESULT: 'Ergebnis',
   NO_END_DATE: 'Kein Enddatum',
+  SETTING: 'Einstellung',
+  PHASE1_READY_MINUTES: 'Phase-1-fertig Minuten',
+  PHASE1_EXPIRE_MINUTES: 'Phase-1-ablaufende Minuten',
+  PHASE2_READY_MINUTES: 'Phase-2-fertig Minuten',
+  PHASE2_EXPIRE_MINUTES: 'Phase-2-ablaufende Minuten',
 };

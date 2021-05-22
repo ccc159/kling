@@ -101,7 +101,7 @@ export const Dashboard = function () {
       <PagerView style={styles.pagerView} initialPage={0}>
         <TestPage {...{ state, task }} />
         <StatisticsPage {...{ state, task }} />
-        <AboutPage {...{ task }} />
+        <AboutPage {...{ task, state }} />
       </PagerView>
     </SafeAreaView>
   );

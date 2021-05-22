@@ -50,7 +50,7 @@ export const AddTestModal = ({ task, config }: IAddTestModal) => {
         data: { test, state: 'ready' },
         sound: true,
       },
-      trigger: { seconds: config.PHASE1_READY_MITUTES * 60 },
+      trigger: { seconds: config.PHASE1_READY_MINUTES * 60 },
     });
   }
 
@@ -62,7 +62,7 @@ export const AddTestModal = ({ task, config }: IAddTestModal) => {
         data: { test, state: 'expired' },
         sound: true,
       },
-      trigger: { seconds: config.PHASE1_EXPIRE_MITUTES * 60 },
+      trigger: { seconds: config.PHASE1_EXPIRE_MINUTES * 60 },
     });
   }
 

@@ -17,6 +17,10 @@ export const reducer: React.Reducer<IState, IAction> = (state: IState = initialS
     const jsonValue = JSON.stringify(newTests);
     AsyncStorage.setItem('tests', jsonValue);
     return { ...state, tests: newTests };
+  } else if (type === 'UPDATE_CONFIG') {
+    const jsonValue = JSON.stringify(payload);
+    AsyncStorage.setItem('config', jsonValue);
+    return { ...state, config: payload };
   } else if (type === 'RESET_APP') {
     const jsonValue = JSON.stringify([]);
     AsyncStorage.setItem('tests', jsonValue);

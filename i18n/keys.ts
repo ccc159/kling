@@ -63,7 +63,12 @@ export const langKeyList = [
     "INVALID_TEST",
     "TEST_INVALID_ACCORDING_TO_READ",
     "RESULT",
-    "NO_END_DATE"
+    "NO_END_DATE",
+    "SETTING",
+    "PHASE1_READY_MINUTES",
+    "PHASE1_EXPIRE_MINUTES",
+    "PHASE2_READY_MINUTES",
+    "PHASE2_EXPIRE_MINUTES",
 ] as const;
 
 // defines type

@@ -63,8 +63,8 @@ const TestPhase1 = ({ test, task, config }: ITestProps) => {
 
   const scale = usePulse();
 
-  const isReady = IsTimeUp(config.PHASE1_READY_MITUTES, fromDate);
-  const isExpired = IsTimeUp(config.PHASE1_EXPIRE_MITUTES, fromDate);
+  const isReady = IsTimeUp(config.PHASE1_READY_MINUTES, fromDate);
+  const isExpired = IsTimeUp(config.PHASE1_EXPIRE_MINUTES, fromDate);
 
   useEffect(() => {
     if (!isExpired) return;
@@ -98,7 +98,7 @@ const TestPhase1 = ({ test, task, config }: ITestProps) => {
         data: { test, state: 'ready' },
         sound: true,
       },
-      trigger: { seconds: config.PHASE2_READY_MITUTES * 60 },
+      trigger: { seconds: config.PHASE2_READY_MINUTES * 60 },
     });
   }
 
@@ -110,7 +110,7 @@ const TestPhase1 = ({ test, task, config }: ITestProps) => {
         data: { test, state: 'expired' },
         sound: true,
       },
-      trigger: { seconds: config.PHASE2_EXPIRE_MITUTES * 60 },
+      trigger: { seconds: config.PHASE2_EXPIRE_MINUTES * 60 },
     });
   }
 
@@ -126,10 +126,10 @@ const TestPhase1 = ({ test, task, config }: ITestProps) => {
         tester={test.tester}
         show={showProgressModal}
         setShow={setShowProgressModal}
-        countDownMinutes={config.PHASE1_READY_MITUTES}
+        countDownMinutes={config.PHASE1_READY_MINUTES}
         from={fromDate}
       />
-      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={config.PHASE1_READY_MITUTES} from={fromDate} />}
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={config.PHASE1_READY_MINUTES} from={fromDate} />}
       <Pressable onPress={onPress}>
         {isReady ? (
           <Animated.View style={{ transform: [{ scale }] }}>
@@ -151,8 +151,8 @@ const TestPhase2 = ({ test, task, config }: ITestProps) => {
 
   const scale = usePulse();
 
-  const isReady = IsTimeUp(config.PHASE2_READY_MITUTES, fromDate);
-  const isExpired = IsTimeUp(config.PHASE2_EXPIRE_MITUTES, fromDate);
+  const isReady = IsTimeUp(config.PHASE2_READY_MINUTES, fromDate);
+  const isExpired = IsTimeUp(config.PHASE2_EXPIRE_MINUTES, fromDate);
 
   useEffect(() => {
     if (!isExpired) return;
@@ -205,10 +205,10 @@ const TestPhase2 = ({ test, task, config }: ITestProps) => {
         tester={test.tester}
         show={showProgressModal}
         setShow={setShowProgressModal}
-        countDownMinutes={config.PHASE2_READY_MITUTES}
+        countDownMinutes={config.PHASE2_READY_MINUTES}
         from={fromDate}
       />
-      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={config.PHASE2_READY_MITUTES} from={fromDate} />}
+      {!isReady && <Timer onPress={onPress} color='black' countDownMinutes={config.PHASE2_READY_MINUTES} from={fromDate} />}
       <Pressable onPress={onPress}>
         {isReady ? (
           <Animated.View style={{ transform: [{ scale }] }}>

@@ -32,10 +32,10 @@ export interface ITest {
 }
 
 export interface IConfig {
-  PHASE1_READY_MITUTES: number;
-  PHASE1_EXPIRE_MITUTES: number;
-  PHASE2_READY_MITUTES: number;
-  PHASE2_EXPIRE_MITUTES: number;
+  PHASE1_READY_MINUTES: number;
+  PHASE1_EXPIRE_MINUTES: number;
+  PHASE2_READY_MINUTES: number;
+  PHASE2_EXPIRE_MINUTES: number;
 }
 
 export interface IState {

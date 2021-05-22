@@ -61,4 +61,9 @@ export const zh: { [key in langKeyType]: string } = {
   TEST_INVALID_ACCORDING_TO_READ: '此计时根据结果显示已无效.',
   RESULT: '结果',
   NO_END_DATE: '无结束日期',
+  SETTING: '设置',
+  PHASE1_READY_MINUTES: '阶段1就绪分钟数',
+  PHASE1_EXPIRE_MINUTES: '阶段1失效分钟数',
+  PHASE2_READY_MINUTES: '阶段2就绪分钟数',
+  PHASE2_EXPIRE_MINUTES: '阶段2失效分钟数',
 };

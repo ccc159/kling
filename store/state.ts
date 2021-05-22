@@ -1,10 +1,10 @@
 import { IConfig, IState } from '../types';
 
 export const defaultConfig: IConfig = {
-  PHASE1_READY_MITUTES: 1,
-  PHASE1_EXPIRE_MITUTES: 60,
-  PHASE2_READY_MITUTES: 15,
-  PHASE2_EXPIRE_MITUTES: 30,
+  PHASE1_READY_MINUTES: 1,
+  PHASE1_EXPIRE_MINUTES: 60,
+  PHASE2_READY_MINUTES: 15,
+  PHASE2_EXPIRE_MINUTES: 30,
 };
 
 export const initialState: IState = {

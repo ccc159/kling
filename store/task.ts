@@ -4,6 +4,7 @@ export interface ITask {
   LoadData: (tests: ITest[], config: IConfig) => void;
   AddTest: (test: ITest) => void;
   UpdateTest: (test: ITest) => void;
+  UpdateConfig: (config: IConfig) => void;
   ResetApp: () => void;
 }
 
@@ -17,9 +18,12 @@ export function useTask(state: IState, dispatch: IDispatch): ITask {
   const UpdateTest = (test: ITest) => {
     dispatch({ type: 'UPDATE_TEST', payload: test });
   };
+  const UpdateConfig = (config: IConfig) => {
+    dispatch({ type: 'UPDATE_CONFIG', payload: config });
+  };
   const ResetApp = () => {
     dispatch({ type: 'RESET_APP' });
   };
 
-  return { LoadData, AddTest, UpdateTest, ResetApp };
+  return { LoadData, AddTest, UpdateTest, UpdateConfig, ResetApp };
 }

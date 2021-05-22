@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { PageTitle } from '../components/Title';
 import IconSvg from '../assets/svg/icon.svg';
 import { windowWidth } from '../components/styles';
 import { ITask } from '../store/task';
 import { t } from '../i18n';
+import { IState } from '../types';
+import { SettingsModal } from '../components/SettingsModal';
 
-export const AboutPage = function ({ task }: { task: ITask }) {
+export const AboutPage = function ({ task, state }: { task: ITask; state: IState }) {
   const resetAlert = () =>
     Alert.alert(
       t('RESET'),
@@ -39,6 +41,7 @@ export const AboutPage = function ({ task }: { task: ITask }) {
               {t('PRIVACY_POLICY')}
             </Text>
           </Text>
+          <SettingsModal {...{ config: state.config, task }} />
           <Text style={styles.smallText}>
             <Text style={{ color: '#eb4034' }} onPress={resetAlert}>
               {t('RESET_APP')}
