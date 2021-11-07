@@ -10,6 +10,7 @@ export const langKeyList = [
     "ARE_YOU_SURE_TO_RESET_APP",
     "CANCEL",
     "ABOUT",
+    "APP_DESCRIPTION",
     "VERSION",
     "WEBSITE",
     "PRIVACY_POLICY",
