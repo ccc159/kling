@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="71.905373mm"
-   height="72.942757mm"
-   viewBox="0 0 71.905373 72.942757"
+   width="34.16991mm"
+   height="34.662781mm"
+   viewBox="0 0 34.169911 34.662781"
    version="1.1"
    id="svg2900"
    inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
@@ -40,8 +40,8 @@
      inkscape:snap-bbox-midpoints="true"
      inkscape:snap-nodes="true"
      lock-margins="false"
-     inkscape:window-width="1267"
-     inkscape:window-height="1040"
+     inkscape:window-width="1781"
+     inkscape:window-height="1111"
      inkscape:window-x="638"
      inkscape:window-y="155"
      inkscape:window-maximized="0" />
@@ -53,7 +53,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
