@@ -16,7 +16,7 @@
         "svg"
       ]
     },
-    "name": "kling",
+    "name": "Kling",
     "slug": "kling",
     "version": "1.0.3",
     "orientation": "portrait",
@@ -35,7 +35,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.jingchengchen.kling",
-      "buildNumber": "1.0.3",
+      "buildNumber": "1.0.4",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       }
@@ -60,6 +60,8 @@
       "zh": "./languages/zh.json",
       "en": "./languages/en.json",
       "de": "./languages/de.json"
-    }
+    },
+    "description": "A free and open source native mobile app to track the status and progress of batch Corona quick tests. Never worried about forgetting the test steps of each one. Together, we make the tests simple and safe!",
+    "githubUrl": "https://github.com/ccc159/kling"
   }
 }
